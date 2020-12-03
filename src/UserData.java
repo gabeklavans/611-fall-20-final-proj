@@ -1,17 +1,19 @@
+import java.util.ArrayList;
+
 public class UserData {
     private String loginAccount;
     private String userName;
     private String loginPassword;
-    private String savingAccount;  /** For account and loan attributesif user does not have the account, the value will be N; otherwise assign the value as string **/
-    private String checkingAccount;
+    private String savingAccountList;  /** For account and loan attributesif user does not have the account, the value will be N; otherwise assign the value as string **/
+    private String checkingAccountList;
     private String loan;
 
-    public UserData(String loginAccount, String userName, String loginPassword, String savingAccount, String checkingAccount, String loan) {
+    public UserData(String loginAccount, String userName, String loginPassword, String savingAccountList, String checkingAccountList, String loan) {
         this.loginAccount = loginAccount;
         this.userName = userName;
         this.loginPassword = loginPassword;
-        this.savingAccount = savingAccount;
-        this.checkingAccount = checkingAccount;
+        this.savingAccountList = savingAccountList;
+        this.checkingAccountList = checkingAccountList;
         this.loan = loan;
     }
 
@@ -21,13 +23,14 @@ public class UserData {
                 "loginAccount='" + loginAccount + '\'' +
                 ", userName='" + userName + '\'' +
                 ", loginPassword='" + loginPassword + '\'' +
-                ", savingAccount='" + savingAccount + '\'' +
-                ", checkingAccount='" + checkingAccount + '\'' +
+                ", savingAccount=" + savingAccountList +
+                ", checkingAccount=" + checkingAccountList +
                 ", loan='" + loan + '\'' +
                 '}';
     }
+
     public String getStringinfo(){
-        return loginAccount+','+userName+','+loginPassword+','+savingAccount+','+checkingAccount+','+loan;
+        return loginAccount+','+userName+','+loginPassword+','+savingAccountList+','+checkingAccountList+','+loan;
     }
 
     public String getLoginAccount() {
@@ -54,20 +57,20 @@ public class UserData {
         this.loginPassword = loginPassword;
     }
 
-    public String getSavingAccount() {
-        return savingAccount;
+    public String getSavingAccountList() {
+        return savingAccountList;
     }
 
-    public void setSavingAccount(String savingAccount) {
-        this.savingAccount = savingAccount;
+    public void setSavingAccountList(String savingAccountList) {
+        this.savingAccountList = savingAccountList;
     }
 
-    public String getCheckingAccount() {
-        return checkingAccount;
+    public String getCheckingAccountList() {
+        return checkingAccountList;
     }
 
-    public void setCheckingAccount(String checkingAccount) {
-        this.checkingAccount = checkingAccount;
+    public void setCheckingAccountList(String checkingAccountList) {
+        this.checkingAccountList = checkingAccountList;
     }
 
     public String getLoan() {

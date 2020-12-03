@@ -19,15 +19,16 @@ public class BankSystem {
 
 
     public BankSystem(){
+
+        writeData();
         readData();
-//        writeData();
         managerPassword = "123";
         loginPage = new LoginPage(customerdataReader,managerPassword);
 
     }
     public void readData(){
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("CustomeData.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("CustomerB/CustomeData.csv"));
 //            reader.readLine();
             String line = null;
             while((line=reader.readLine())!=null){
@@ -36,24 +37,24 @@ public class BankSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        for(String s : customerdataReader ){
-//            System.out.println(s);
-//        }
 
     }
 
-
     public void writeData(){
         try {
-            File csv = new File("CustomeData.csv"); // CSV数据文件
+            String filepath = "CustomerB";
+            File dir = new File(filepath);
+            if(!dir.exists()) dir.mkdir();
+            String fileName = "CustomeData.csv";
+            File csv = new File(filepath+'/'+fileName); // CSV数据文件
 //            File parentDir = csv.getAbsoluteFile().getParentFile();
 //            String parentDirName = csv.getAbsoluteFile().getParent();
 //            System.out.println(parentDir);
 //            System.out.println(parentDirName);
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
 
-            UserData testD = new UserData("abc@bu.edu","Bustudent","123456","N","500","N");
-            UserData testD2 = new UserData("john@bu.edu","john","123456","N","500","N");
+            UserData testD = new UserData("abc@bu.edu","Bustudent","123456","2020_12_2-S023-2300|2020_12_3-S022-3300","N","N");
+            UserData testD2 = new UserData("john@bu.edu","john","123456","N","N","N");
             customerdataWriter.add(testD.getStringinfo());
             customerdataWriter.add(testD2.getStringinfo());
             for(String s : customerdataWriter){
@@ -70,6 +71,11 @@ public class BankSystem {
             e.printStackTrace();
         }
     }
+
+//    public static void main(String[] args) {
+//        new BankSystem();
+//
+//    }
 
 
 
