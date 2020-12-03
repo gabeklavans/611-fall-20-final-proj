@@ -45,7 +45,7 @@ public class BankSystem {
 
     public void writeData(){
         try {
-            File csv = new File("CustomeData.csv"); // CSV数据文件
+            File csv = new File("CustomeData.csv"); // 
 //            File parentDir = csv.getAbsoluteFile().getParentFile();
 //            String parentDirName = csv.getAbsoluteFile().getParent();
 //            System.out.println(parentDir);
