@@ -7,14 +7,16 @@ public class UserData {
     private String savingAccountList;  /** For account and loan attributesif user does not have the account, the value will be N; otherwise assign the value as string **/
     private String checkingAccountList;
     private String loan;
+    private String collateral;
 
-    public UserData(String loginAccount, String userName, String loginPassword, String savingAccountList, String checkingAccountList, String loan) {
+    public UserData(String loginAccount, String userName, String loginPassword, String savingAccountList, String checkingAccountList, String loan, String collateral) {
         this.loginAccount = loginAccount;
         this.userName = userName;
         this.loginPassword = loginPassword;
         this.savingAccountList = savingAccountList;
         this.checkingAccountList = checkingAccountList;
         this.loan = loan;
+        this.collateral = collateral;
     }
 
     @Override
@@ -23,14 +25,15 @@ public class UserData {
                 "loginAccount='" + loginAccount + '\'' +
                 ", userName='" + userName + '\'' +
                 ", loginPassword='" + loginPassword + '\'' +
-                ", savingAccount=" + savingAccountList +
-                ", checkingAccount=" + checkingAccountList +
+                ", savingAccountList='" + savingAccountList + '\'' +
+                ", checkingAccountList='" + checkingAccountList + '\'' +
                 ", loan='" + loan + '\'' +
+                ", collateral='" + collateral + '\'' +
                 '}';
     }
 
     public String getStringinfo(){
-        return loginAccount+','+userName+','+loginPassword+','+savingAccountList+','+checkingAccountList+','+loan;
+        return loginAccount+','+userName+','+loginPassword+','+savingAccountList+','+checkingAccountList+','+loan+','+collateral;
     }
 
     public String getLoginAccount() {
@@ -79,5 +82,13 @@ public class UserData {
 
     public void setLoan(String loan) {
         this.loan = loan;
+    }
+
+    public String getCollateral() {
+        return collateral;
+    }
+
+    public void setCollateral(String collateral) {
+        this.collateral = collateral;
     }
 }

@@ -13,6 +13,7 @@ public class Customer extends User{
         this.userinfo = userinfo;
         this.filepath = userinfo.getUserName()+"_statement";
         accountDataInitialization();
+        this.filepath = userinfo.getUserName();
     }
 
     public void accountDataInitialization(){
@@ -30,7 +31,26 @@ public class Customer extends User{
                 this.checkingtList.add(s);
             }
         }
+    }
 
+    public void openAccount(){
+        System.out.println("open an account");
+    }
+
+    public void viewBankAccount(){ /** parameter: Account account **/
+        System.out.println("view bank account");
+    }
+
+    public void deposit(){ /** parameter: Account account **/
+        System.out.println("deposit money");
+    }
+
+    public void withdraw(){ /** parameter: Account account **/
+        System.out.println("withdraw money");
+    }
+
+    public void requestLoan(){
+        System.out.println("loan money from bank");
     }
 
     public UserData getUserinfo() {
