@@ -53,9 +53,9 @@ public class Balance {
      * @throws Exception if there is not enough money in the balance to make the
      *                   withdrawal
      */
-    public double withdraw(double amt, Currency type) throws Exception {
+    public double withdraw(double amt, Currency type) throws BankException {
         if (internalValue - (amt * type.getUivExchangeRate()) < 0) {
-            throw new Exception("The balance is too low to make this withdrawal.");
+            throw new BankException("The balance is too low to make this withdrawal.");
         }
 
         internalValue -= amt * type.getUivExchangeRate();
