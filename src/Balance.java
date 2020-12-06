@@ -18,20 +18,12 @@ public class Balance {
 
     /**
      * 
-     * @return The UIV representation of this balance
-     */
-    public double getInternalValue() {
-        return internalValue;
-    }
-
-    /**
-     * 
      * @param type The unit of currency to get the balance in. Performs the
      *             conversion from UIV automatically.
      * @return The balance in terms of the type of currency
      */
     public double getBalance(Currency type) {
-        return internalValue / type.getUivExchangeRate();
+        return Currency.convert(internalValue, Currency.UIV, type);
     }
 
     /**
@@ -41,8 +33,8 @@ public class Balance {
      * @return The updated balance in terms of the specified unit of currency
      */
     public double deposit(double amt, Currency type) {
-        internalValue += amt * type.getUivExchangeRate();
-        return internalValue / type.getUivExchangeRate();
+        internalValue += Currency.convert(amt, type, Currency.UIV);
+        return Currency.convert(amt, Currency.UIV, type);
     }
 
     /**
@@ -54,12 +46,12 @@ public class Balance {
      *                   withdrawal
      */
     public double withdraw(double amt, Currency type) throws BankException {
-        if (internalValue - (amt * type.getUivExchangeRate()) < 0) {
+        if (internalValue - (Currency.convert(amt, type, Currency.UIV)) < 0) {
             throw new BankException("The balance is too low to make this withdrawal.");
         }
 
-        internalValue -= amt * type.getUivExchangeRate();
-        return internalValue / type.getUivExchangeRate();
+        internalValue -= Currency.convert(amt, type, Currency.UIV);
+        return Currency.convert(amt, Currency.UIV, type);
     }
 
 }
