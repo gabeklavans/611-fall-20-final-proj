@@ -1,8 +1,8 @@
 /**
  * Represents an account's balance. This representation is
- * currency-type-agnostic. The balance is stored as a unified internal value and
- * all deposits/withdraws must have a specified unit of currency to do the
- * proper conversion.
+ * currency-type-agnostic. The balance is stored as a unified internal value
+ * (UIV) and all deposits/withdraws must have a specified unit of currency to do
+ * the proper conversion.
  */
 public class Balance {
 
@@ -10,15 +10,15 @@ public class Balance {
 
     /**
      * 
-     * @param startingBalance
+     * @param initialValue Initial value of balance in units of UIV
      */
-    public Balance(double startingBalance) {
-        internalValue = startingBalance;
+    public Balance(double initialValue) {
+        internalValue = initialValue;
     }
 
     /**
      * 
-     * @return The internal unified representation of this balance
+     * @return The UIV representation of this balance
      */
     public double getInternalValue() {
         return internalValue;
@@ -27,11 +27,11 @@ public class Balance {
     /**
      * 
      * @param type The unit of currency to get the balance in. Performs the
-     *             conversion from the internal value automatically.
+     *             conversion from UIV automatically.
      * @return The balance in terms of the type of currency
      */
     public double getBalance(Currency type) {
-        return internalValue / type.getExchangeRate();
+        return internalValue / type.getUivExchangeRate();
     }
 
     /**
@@ -41,25 +41,25 @@ public class Balance {
      * @return The updated balance in terms of the specified unit of currency
      */
     public double deposit(double amt, Currency type) {
-        internalValue += amt * type.getExchangeRate();
-        return internalValue / type.getExchangeRate();
+        internalValue += amt * type.getUivExchangeRate();
+        return internalValue / type.getUivExchangeRate();
     }
 
     /**
      * 
-     * @param amt  Amount to withdraw
-     * @param type Unit of currency that the withdrawal amount is in terms of
+     * @param amt  The amount to withdraw
+     * @param type The unit of currency that the withdrawal amount is in terms of
      * @return The new balance after the withdrawal
      * @throws Exception if there is not enough money in the balance to make the
      *                   withdrawal
      */
     public double withdraw(double amt, Currency type) throws Exception {
-        if (internalValue - (amt * type.getExchangeRate()) < 0) {
+        if (internalValue - (amt * type.getUivExchangeRate()) < 0) {
             throw new Exception("The balance is too low to make this withdrawal.");
         }
 
-        internalValue -= amt * type.getExchangeRate();
-        return internalValue / type.getExchangeRate();
+        internalValue -= amt * type.getUivExchangeRate();
+        return internalValue / type.getUivExchangeRate();
     }
 
 }
