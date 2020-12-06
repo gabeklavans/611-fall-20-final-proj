@@ -45,4 +45,21 @@ public class Balance {
         return internalValue / type.getExchangeRate();
     }
 
+    /**
+     * 
+     * @param amt  Amount to withdraw
+     * @param type Unit of currency that the withdrawal amount is in terms of
+     * @return The new balance after the withdrawal
+     * @throws Exception if there is not enough money in the balance to make the
+     *                   withdrawal
+     */
+    public double withdraw(double amt, Currency type) throws Exception {
+        if (internalValue - (amt * type.getExchangeRate()) < 0) {
+            throw new Exception("The balance is too low to make this withdrawal.");
+        }
+
+        internalValue -= amt * type.getExchangeRate();
+        return internalValue / type.getExchangeRate();
+    }
+
 }
