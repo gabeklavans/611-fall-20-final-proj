@@ -7,31 +7,41 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-
+/**
+ * An bankSystem maintains the running of the bank. The bank system is responsible for saving and loading
+ * all the data of the bank
+ */
 
 public class BankSystem {
-    private static ArrayList<String> customerdataReader = new ArrayList<>();
-    private static ArrayList<String> customerdataWriter = new ArrayList<>();
+    private static ArrayList<String> allCustomerData = new ArrayList<>();
     private String managerPassword;
     private LoginPage loginPage;
     private static String filepath = "Customers";
     private static String fileName = "CustomesData.csv";
-    private Boolean firstWrite = true;
 
 
 
+    /**
+     * Create a BankSystem and load all stored data.
+     * show a login page to users
+     */
     public BankSystem(){
+        dataFileInitial();
         readData();
-        managerPassword = "123";
-        loginPage = new LoginPage(customerdataReader,managerPassword);
+        managerPassword = "123"; /** set a temple managerPassword for test, maybe store manager info in an other file later **/
+        loginPage = new LoginPage(allCustomerData,managerPassword);
     }
+
+    /**
+     * loading all customers' data when BankSystem is initialized
+     */
     public void readData(){
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filepath+"/"+fileName));
 //            reader.readLine();
             String line = null;
             while((line=reader.readLine())!=null){
-                customerdataReader.add(line);
+                allCustomerData.add(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,45 +49,19 @@ public class BankSystem {
 
     }
 
-    public void writeData(){
-        try {
-            File dir = new File(filepath);
-            if(!dir.exists()) dir.mkdir();
-            File csv = new File(filepath+'/'+fileName); // CSVFile
-//            File parentDir = csv.getAbsoluteFile().getParentFile();
-//            String parentDirName = csv.getAbsoluteFile().getParent();
-//            System.out.println(parentDir);
-//            System.out.println(parentDirName);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
-            UserData testD = new UserData("abc@bu.edu","Bustudent","123456","2020_12_2-S023-2300|2020_12_3-S022-3300","N","N","100");
-            UserData testD2 = new UserData("john@bu.edu","john","123456","N","N","N","100");
-            customerdataWriter.add(testD.getStringinfo());
-            customerdataWriter.add(testD2.getStringinfo());
-            for(String s : customerdataWriter){
-                bw.write(s);
-                bw.newLine();
-            }
-            bw.close();
 
-        } catch (FileNotFoundException e) {
-            // File catch exception when initialization
-            e.printStackTrace();
-        } catch (IOException e) {
-            // BufferedWriter catch exception when close
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * When there is new customer, the new customer's information will be updated to the datafile
+     * @param userData the userData of new registered customer
+     */
     public static void updateCustomersData(UserData userData){
         try {
             File dir = new File(filepath);
             if(!dir.exists()) dir.mkdir();
             File csv = new File(filepath+'/'+fileName);
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
-            customerdataWriter = (ArrayList<String>)customerdataReader.clone();
-            customerdataWriter.add(userData.getStringinfo());
-            customerdataReader = (ArrayList<String>)customerdataWriter.clone();
-            for(String s :customerdataWriter){
+            allCustomerData.add(userData.getStringinfo());
+            for(String s :allCustomerData){
                 bw.write(s);
                 bw.newLine();
             }
@@ -92,6 +76,12 @@ public class BankSystem {
         }
     }
 
+    /**
+     * store the users' account statement
+     * @param directory each user has a folder for their bank Account statement
+     * @param userfilename each bank account of has a different file name. Ex. a saving account file name maybe: S0123
+     * @param statement all transactions are stored as string in the arraylist
+     */
     public static void saveUserAccountStatement(String directory, String userfilename, ArrayList<String> statement){
         try{
             File dir = new File(filepath+'/'+directory);
@@ -113,8 +103,33 @@ public class BankSystem {
             // BufferedWriter catch exception when close
             e.printStackTrace();
         }
-
     }
+
+    /**
+     * When the data file does not exist, create one
+     */
+    public void dataFileInitial(){
+        try {
+            File dir = new File(filepath);
+            if(!dir.exists()){
+                dir.mkdir();
+
+            }
+            File csv = new File(filepath+'/'+fileName); // CSVFile
+            if(!csv.exists()){
+                dir.mkdir();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(csv,true));
+                bw.close();
+            }
+        } catch (FileNotFoundException e) {
+            // File catch exception when initialization
+            e.printStackTrace();
+        } catch (IOException e) {
+            // BufferedWriter catch exception when close
+            e.printStackTrace();
+        }
+    }
+
 
     public static String getFilepath() {
         return filepath;

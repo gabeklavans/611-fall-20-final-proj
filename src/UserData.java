@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+/**
+ * An UserData stores a customer's information in the bank
+ *
+ */
 
 public class UserData {
     private String loginAccount;

@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * An LoginPage provide both customers and manager a way to login to the bank user-interface.
+ */
+
 public class LoginPage {
     private String inputLoginAccount;
     private String inputpassword;
@@ -48,9 +52,6 @@ public class LoginPage {
         inputpassword = scanner.nextLine();
 
         if(customerLoginValidator(inputLoginAccount, inputpassword)){
-//            System.out.println(this.customer.getUserinfo().getUserName());
-//            System.out.println(this.customer.getSavingList());
-//            System.out.println(this.customer.getCheckingtList());
             new ATM_CustomerInterface(this.customer);
         }else {
             System.out.println("login fails");
@@ -78,10 +79,10 @@ public class LoginPage {
         registeredUserName = scanner.nextLine();
         System.out.println("Enter password");
         registeredPassword = scanner.nextLine();
-        registeredUserData = new UserData(registeredUserAccountID,registeredUserName,registeredPassword,"N","N","N","None");
+        registeredUserData = new UserData(registeredUserAccountID,registeredUserName,registeredPassword,"N","N","N","N");
+        BankSystem.updateCustomersData(registeredUserData);
         this.customer = new Customer(registeredUserData);
         new ATM_CustomerInterface(this.customer);
-        BankSystem.updateCustomersData(registeredUserData);
     }
 
     public boolean customerLoginValidator(String account, String password){
@@ -105,7 +106,6 @@ public class LoginPage {
 
     public Customer initialCustomer(String data){
         String element[] = data.split(",");
-        System.out.println(element.length);
                             /** 0.LoginAccountNumber, 1.Name, 2. password 3.SavingList 4.CheckingList 5.loan**/
         UserData newData = new UserData(element[0],element[1],element[2],element[3],element[4],element[5],element[6]);
         return new Customer(newData);

@@ -19,7 +19,7 @@ public class ATM_CustomerInterface {
                 customer.openAccount();
                 break;
             case 2:
-                customer.viewBankAccount();
+                customer.viewBankAccount("s102");
                 break;
             case 3:
                 customer.requestLoan();
