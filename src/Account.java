@@ -74,4 +74,13 @@ public abstract class Account {
     public double withdraw(double amt, Currency type) throws BankException {
         return balance.withdraw(amt, type);
     }
+
+    public Date getOpenDate() {
+        return openDate;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
 }
