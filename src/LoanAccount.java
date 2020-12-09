@@ -8,34 +8,29 @@ public class LoanAccount extends Account {
     private static final double defaultInterestRate = 1; // It's 1! So low!
 
     private Interest interestRate;
-    private double interestBalanceRequirement; // TODO: May want to move this out of here and into a BankManager class
 
     /**
      * Create a Loan account with the default interest rate.
      * 
      * @param startingBalance
-     * @param interestBalanceRequirement The lowest balance that qualifies for
-     *                                   generating interest
+     * @param type            of currency
      */
-    public LoanAccount(double startingBalance, double interestBalanceRequirement) {
-        this(startingBalance, defaultInterestRate, Currency.UIV, interestBalanceRequirement);
+    public LoanAccount(double startingBalance, Currency type) {
+        this(startingBalance, defaultInterestRate, type);
     }
 
     /**
      * Create a new Loan Account with specified interest rate.
      * 
      * @param startingBalance
-     * @param interestRate               The fraction of the balance generated for
-     *                                   every interest payment
-     * @param type                       The unit of currency that the interest rate
-     *                                   is in terms of
-     * @param interestBalanceRequirement The lowest balance that qualifies for
-     *                                   generating interest
+     * @param interestRate    The fraction of the balance generated for every
+     *                        interest payment
+     * @param type            The unit of currency that the interest rate is in
+     *                        terms of
      */
-    public LoanAccount(double startingBalance, double interestRate, Currency type, double interestBalanceRequirement) {
-        super(startingBalance);
+    public LoanAccount(double startingBalance, double interestRate, Currency type) {
+        super(startingBalance, type);
         this.interestRate = new Interest(interestRate, type);
-        this.interestBalanceRequirement = interestBalanceRequirement;
     }
 
     /**
@@ -45,7 +40,6 @@ public class LoanAccount extends Account {
             double interestBalanceRequirement) throws BankException {
         super(openDate, accountNumber, balance);
         this.interestRate = new Interest(interestRate, Currency.UIV);
-        this.interestBalanceRequirement = interestBalanceRequirement;
     }
 
     /**

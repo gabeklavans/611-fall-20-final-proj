@@ -9,6 +9,11 @@ import java.util.UUID;
  */
 public abstract class Account {
 
+    /* Specifies the types of accounts that can be created */
+    public enum Type {
+        CHECKING, SAVINGS, LOAN;
+    }
+
     private Date openDate;
     private String accountNumber;
     private Balance balance;
@@ -18,8 +23,8 @@ public abstract class Account {
      * 
      * @param startingBalance
      */
-    public Account(double startingBalance) {
-        balance = new Balance(startingBalance);
+    public Account(double startingBalance, Currency type) {
+        balance = new Balance(startingBalance, type);
         openDate = new Date();
         accountNumber = UUID.randomUUID().toString();
     }
@@ -29,7 +34,7 @@ public abstract class Account {
      * 
      * @param openDate
      * @param accountNumber
-     * @param balance
+     * @param balance       in UIV, as it's stored in the database
      * @throws BankException
      */
     public Account(String openDate, String accountNumber, double balance) throws BankException {
@@ -39,7 +44,7 @@ public abstract class Account {
             throw new BankException("Invalid account open date format.", e);
         }
         this.accountNumber = accountNumber;
-        this.balance = new Balance(balance);
+        this.balance = new Balance(balance, Currency.UIV);
     }
 
     /**

@@ -12,8 +12,8 @@ public class Balance {
      * 
      * @param initialValue Initial value of balance in units of UIV
      */
-    public Balance(double initialValue) {
-        internalValue = initialValue;
+    public Balance(double initialValue, Currency type) {
+        internalValue = Currency.convert(initialValue, type, Currency.UIV);
     }
 
     /**

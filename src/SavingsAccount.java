@@ -1,3 +1,7 @@
+/**
+ * A Savings Account functions similarly to a Checking Account but has the
+ * additional function of gaining interest over time.
+ */
 public class SavingsAccount extends Account {
 
     /* set a very rational, profit-minded default interest rate in UIV */
@@ -10,11 +14,12 @@ public class SavingsAccount extends Account {
      * Create a Savings account with the default interest rate.
      * 
      * @param startingBalance
+     * @param type                       of currency
      * @param interestBalanceRequirement The lowest balance that qualifies for
      *                                   generating interest
      */
-    public SavingsAccount(double startingBalance, double interestBalanceRequirement) {
-        this(startingBalance, defaultInterestRate, Currency.UIV, interestBalanceRequirement);
+    public SavingsAccount(double startingBalance, Currency type, double interestBalanceRequirement) {
+        this(startingBalance, defaultInterestRate, type, interestBalanceRequirement);
     }
 
     /**
@@ -30,13 +35,24 @@ public class SavingsAccount extends Account {
      */
     public SavingsAccount(double startingBalance, double interestRate, Currency type,
             double interestBalanceRequirement) {
-        super(startingBalance);
+        super(startingBalance, type);
         this.interestRate = new Interest(interestRate, type);
         this.interestBalanceRequirement = interestBalanceRequirement;
     }
 
     /**
-     * Load a pre-existing Savings Account using necessary parameters.
+     * Private constructor for loading a SavingsAccount
+     */
+    private SavingsAccount(String openDate, String accountNumber, double balance, double interestRate,
+            double interestBalanceRequirement) throws BankException {
+        super(openDate, accountNumber, balance);
+        this.interestRate = new Interest(interestRate, Currency.UIV);
+        this.interestBalanceRequirement = interestBalanceRequirement;
+    }
+
+    /**
+     * Load the info for a pre-existing Savings Account and return the constructed
+     * account.
      * 
      * @param openDate
      * @param accountNumber
@@ -48,11 +64,9 @@ public class SavingsAccount extends Account {
      *                                   generating interest
      * @throws BankException if the open date formatting is invalid
      */
-    public SavingsAccount(String openDate, String accountNumber, double balance, double interestRate,
+    public static SavingsAccount loadAccount(String openDate, String accountNumber, double balance, double interestRate,
             double interestBalanceRequirement) throws BankException {
-        super(openDate, accountNumber, balance);
-        this.interestRate = new Interest(interestRate, Currency.UIV);
-        this.interestBalanceRequirement = interestBalanceRequirement;
+        return new SavingsAccount(openDate, accountNumber, balance, interestRate, interestBalanceRequirement);
     }
 
     /**
