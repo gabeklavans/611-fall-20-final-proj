@@ -29,4 +29,36 @@ public class AccountManager extends DataManager<Account> {
         writeData();
     }
 
+    /**
+     * 
+     * @param acct to subtract from
+     * @param amt  to subtract
+     * @param type of currency the amount is in
+     * @return the new balance in the unit of currency specified
+     * @throws BankException
+     */
+    public double subtractBalance(Account acct, double amt, Currency type) throws BankException {
+        acct.withdraw(amt, type);
+
+        writeData();
+
+        return acct.getBalance(type);
+    }
+
+    /**
+     * 
+     * @param acct to add to
+     * @param amt  to add
+     * @param type of currency the amount is in
+     * @return the new balance in the unit of currency specified
+     * @throws BankException
+     */
+    public double addBalance(Account acct, double amt, Currency type) throws BankException {
+        acct.deposit(amt, type);
+
+        writeData();
+
+        return acct.getBalance(type);
+    }
+
 }
