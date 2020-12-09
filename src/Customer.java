@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Customer extends User {
     /** store customer's opened Accounts **/
     private ArrayList<Account> accounts;
-    /** all customer's infomation in this bank **/
+    /** all customer's information in this bank **/
     private UserData userinfo;
     /** path to access where user's bankAccount info stored **/
     private String filepath;

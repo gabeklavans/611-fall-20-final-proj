@@ -9,6 +9,8 @@ import java.util.UUID;
  */
 public abstract class Account {
 
+    // TODO: track all the transactions in an account
+
     /* Specifies the types of accounts that can be created */
     public enum Type {
         CHECKING, SAVINGS, LOAN;
