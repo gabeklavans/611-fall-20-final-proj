@@ -70,28 +70,10 @@ public class Bank {
      * @param user
      * @param accountBalance
      * @param type                       of currency
-     * @param interestBalanceRequirement
-     * @return True if the account was successfully created
-     */
-    public boolean openSavingsAccount(Customer user, double accountBalance, Currency type,
-            double interestBalanceRequirement) {
-        SavingsAccount newAccount = new SavingsAccount(accountBalance, type, interestBalanceRequirement);
-
-        accountsManager.addAccount(newAccount);
-        usersManager.registerAccountWithUser(user, newAccount);
-
-        return true;
-    }
-
-    /**
-     * Open a new Savings account with a user.
-     * 
-     * @param user
-     * @param accountBalance
-     * @param type                       of currency
      * @param interestRate
      * @param interestBalanceRequirement
      * @return True if the account was successfully created
+     * @apiNote see SavingsAccount class for default interest rate
      */
     public boolean openSavingsAccount(Customer user, double accountBalance, Currency type, double interestRate,
             double interestBalanceRequirement) {
@@ -109,27 +91,10 @@ public class Bank {
      * 
      * @param user
      * @param loanAmount
-     * @param type       of currency
-     * @return True if the account was successfully created
-     */
-    public boolean openLoan(Customer user, double loanAmount, Currency type) {
-        LoanAccount newAccount = new LoanAccount(loanAmount, type);
-
-        accountsManager.addAccount(newAccount);
-        usersManager.registerAccountWithUser(user, newAccount);
-
-        return true;
-    }
-
-    /**
-     * Take out a Loan with the default interest rate and open a LoanAccount for
-     * this user.
-     * 
-     * @param user
-     * @param loanAmount
      * @param interestRate
      * @param type         of currency
      * @return True if the account was successfully created
+     * @apiNote see LoanAccount class for default interest rate
      */
     public boolean openLoan(Customer user, double loanAmount, double interestRate, Currency type) {
         LoanAccount newAccount = new LoanAccount(loanAmount, interestRate, type);

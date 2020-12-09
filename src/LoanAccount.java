@@ -5,7 +5,7 @@
 public class LoanAccount extends Account {
 
     /** A very rational, profit-minded default interest rate in UIV */
-    private static final double defaultInterestRate = 1; // It's 1! So low!
+    public static final double defaultInterestRate = 1; // It's 1! So low!
 
     private Interest interestRate;
 
