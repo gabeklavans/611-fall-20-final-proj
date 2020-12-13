@@ -1,5 +1,6 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,16 +20,20 @@ public abstract class Account {
     private Date openDate;
     private String accountNumber;
     private Balance balance;
+    private ArrayList<Transaction> transactions;
 
     /**
      * Create a new account with a starting balance.
      * 
      * @param startingBalance
+     * @param type            of currency the starting balance is in terms of
+     * @param accountType     NOTE: used as an easier way to store account type
      */
-    public Account(double startingBalance, Currency type) {
+    public Account(double startingBalance, Currency type, String accountType) {
         balance = new Balance(startingBalance, type);
         openDate = new Date();
-        accountNumber = UUID.randomUUID().toString();
+        transactions = new ArrayList<>();
+        accountNumber = accountType + UUID.randomUUID().toString();
     }
 
     /**
@@ -39,7 +44,8 @@ public abstract class Account {
      * @param balance       in UIV, as it's stored in the database
      * @throws BankException
      */
-    public Account(String openDate, String accountNumber, double balance) throws BankException {
+    public Account(String openDate, String accountNumber, double balance, ArrayList<Transaction> transactions)
+            throws BankException {
         try {
             this.openDate = new SimpleDateFormat("MM/dd/yyyy").parse(openDate);
         } catch (ParseException e) {
@@ -47,6 +53,7 @@ public abstract class Account {
         }
         this.accountNumber = accountNumber;
         this.balance = new Balance(balance, Currency.UIV);
+        this.transactions = transactions;
     }
 
     /**
@@ -82,12 +89,25 @@ public abstract class Account {
         return balance.withdraw(amt, type);
     }
 
+    /**
+     * Add a transaction to this account's list of transactions.
+     * 
+     * @param transaction
+     */
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
+    }
+
     public Date getOpenDate() {
         return openDate;
     }
 
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
 
     public abstract String getAccountInfo();

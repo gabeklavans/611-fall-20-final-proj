@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * A Savings Account functions similarly to a Checking Account but has the
  * additional function of gaining interest over time.
@@ -35,7 +37,7 @@ public class SavingsAccount extends Account {
      */
     public SavingsAccount(double startingBalance, double interestRate, Currency type,
             double interestBalanceRequirement) {
-        super(startingBalance, type);
+        super(startingBalance, type, "S");
         this.interestRate = new Interest(interestRate, type);
         this.interestBalanceRequirement = interestBalanceRequirement;
     }
@@ -44,8 +46,8 @@ public class SavingsAccount extends Account {
      * Private constructor for loading a SavingsAccount
      */
     private SavingsAccount(String openDate, String accountNumber, double balance, double interestRate,
-                          double interestBalanceRequirement) throws BankException {
-        super(openDate, accountNumber, balance);
+            double interestBalanceRequirement, ArrayList<Transaction> transactions) throws BankException {
+        super(openDate, accountNumber, balance, transactions);
         this.interestRate = new Interest(interestRate, Currency.UIV);
         this.interestBalanceRequirement = interestBalanceRequirement;
     }
@@ -62,11 +64,14 @@ public class SavingsAccount extends Account {
      *                                   from database)
      * @param interestBalanceRequirement The lowest balance that qualifies for
      *                                   generating interest
+     * @param transactions               The list of transactions this account kept
+     *                                   track of
      * @throws BankException if the open date formatting is invalid
      */
     public static SavingsAccount loadAccount(String openDate, String accountNumber, double balance, double interestRate,
-            double interestBalanceRequirement) throws BankException {
-        return new SavingsAccount(openDate, accountNumber, balance, interestRate, interestBalanceRequirement);
+            double interestBalanceRequirement, ArrayList<Transaction> transactions) throws BankException {
+        return new SavingsAccount(openDate, accountNumber, balance, interestRate, interestBalanceRequirement,
+                transactions);
     }
 
     /**
@@ -97,10 +102,8 @@ public class SavingsAccount extends Account {
 
     @Override
     public String getAccountInfo() {
-        return getOpenDate()+","+getAccountNumber()+
-                String.valueOf(getBalance(Currency.UIV))+
-                String.valueOf(getInterestRate(Currency.UIV))+
-                String.valueOf(interestBalanceRequirement);
+        return getOpenDate() + "," + getAccountNumber() + String.valueOf(getBalance(Currency.UIV))
+                + String.valueOf(getInterestRate(Currency.UIV)) + String.valueOf(interestBalanceRequirement);
     }
 
 }
