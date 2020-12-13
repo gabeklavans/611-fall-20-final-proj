@@ -40,18 +40,18 @@ public class Bank {
 
     /**
      * 
-     * @return a deep copy of the list of accounts in the system
+     * @return a deep copy (read-only) of the list of accounts in the system
      */
     public ArrayList<Account> getAccounts() {
-        return accountsManager.getData();
+        return new ArrayList<Account>(accountsManager.getData());
     }
 
     /**
      * 
-     * @return a deep copy of the list of users in the system
+     * @return a deep copy (read-only) of the list of users in the system
      */
     public ArrayList<User> getUsers() {
-        return usersManager.getData();
+        return new ArrayList<User>(usersManager.getData());
     }
 
     /**
