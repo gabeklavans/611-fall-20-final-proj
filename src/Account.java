@@ -90,4 +90,6 @@ public abstract class Account {
         return accountNumber;
     }
 
+    public abstract String getAccountInfo();
+
 }

@@ -44,7 +44,7 @@ public class SavingsAccount extends Account {
      * Private constructor for loading a SavingsAccount
      */
     private SavingsAccount(String openDate, String accountNumber, double balance, double interestRate,
-            double interestBalanceRequirement) throws BankException {
+                          double interestBalanceRequirement) throws BankException {
         super(openDate, accountNumber, balance);
         this.interestRate = new Interest(interestRate, Currency.UIV);
         this.interestBalanceRequirement = interestBalanceRequirement;
@@ -93,6 +93,14 @@ public class SavingsAccount extends Account {
      */
     public void setInterestRate(double rate, Currency type) {
         interestRate.setInterestRate(rate, type);
+    }
+
+    @Override
+    public String getAccountInfo() {
+        return getOpenDate()+","+getAccountNumber()+
+                String.valueOf(getBalance(Currency.UIV))+
+                String.valueOf(getInterestRate(Currency.UIV))+
+                String.valueOf(interestBalanceRequirement);
     }
 
 }

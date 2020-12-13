@@ -20,6 +20,8 @@ public class CheckingAccount extends Account {
         super(openDate, accountNumber, balance);
     }
 
+
+
     /**
      * Load in a pre-existing checking account with its necessary parameters.
      * 
@@ -33,4 +35,8 @@ public class CheckingAccount extends Account {
         return new CheckingAccount(openDate, accountNumber, balance);
     }
 
+    @Override
+    public String getAccountInfo() {
+        return getOpenDate()+","+getAccountNumber()+","+String.valueOf(getBalance(Currency.UIV));
+    }
 }

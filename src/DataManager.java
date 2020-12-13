@@ -19,7 +19,7 @@ public abstract class DataManager<T> {
      * 
      * @param filepath to the data file
      */
-    abstract public void loadData();
+    abstract public void loadData() throws BankException;
 
     /**
      * Write out all the contents of this manager to a data file.

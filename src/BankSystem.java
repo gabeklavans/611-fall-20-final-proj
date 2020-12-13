@@ -46,7 +46,9 @@ public class BankSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        for(String s : allCustomerData){
+            System.out.println(s);
+        }
     }
 
 

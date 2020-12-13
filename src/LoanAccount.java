@@ -87,4 +87,9 @@ public class LoanAccount extends Account {
         interestRate.setInterestRate(rate, type);
     }
 
+    @Override
+    public String getAccountInfo() {
+        return getOpenDate()+","+getAccountNumber()+","+
+                getBalance(Currency.UIV)+String.valueOf(getInterestRate(Currency.UIV));
+    }
 }
