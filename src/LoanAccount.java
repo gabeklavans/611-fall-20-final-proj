@@ -94,7 +94,7 @@ public class LoanAccount extends Account {
 
     @Override
     public String getAccountInfo() {
-        return getOpenDate() + "," + getAccountNumber() + "," + getBalance(Currency.UIV)
+        return getOpenDate() + "," + getAccountNumber() + "," + getBalance(Currency.UIV)+","
                 + String.valueOf(getInterestRate(Currency.UIV));
     }
 }

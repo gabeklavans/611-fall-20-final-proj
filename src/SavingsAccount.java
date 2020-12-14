@@ -102,8 +102,8 @@ public class SavingsAccount extends Account {
 
     @Override
     public String getAccountInfo() {
-        return getOpenDate() + "," + getAccountNumber() + String.valueOf(getBalance(Currency.UIV))
-                + String.valueOf(getInterestRate(Currency.UIV)) + String.valueOf(interestBalanceRequirement);
+        return getOpenDate() + "," + getAccountNumber() +","+String.valueOf(getBalance(Currency.UIV))+","
+                + String.valueOf(getInterestRate(Currency.UIV)) +","+ String.valueOf(interestBalanceRequirement);
     }
 
 }

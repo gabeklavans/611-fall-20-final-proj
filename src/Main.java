@@ -1,13 +1,27 @@
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BankException {
 
         /** test code for UserManger and Account Manager **/
-//        AccountManager am = new AccountManager("Customers");
-//        am.addAccount(new SavingsAccount(100, Currency.UIV,10));
-//        am.addAccount(new SavingsAccount(200, Currency.UIV,10));
-//        am.writeData();
+        AccountManager am = new AccountManager("Customers");
+        am.addAccount(new SavingsAccount(100, Currency.UIV,10));
+        am.addAccount(new CheckingAccount(200, Currency.UIV));
+        am.addAccount(new LoanAccount(300,Currency.UIV));
+
+
+        Transaction t1 = new Transaction(Transaction.Type.DEPOSIT,100,Currency.UIV);
+        Transaction t2 = new Transaction(Transaction.Type.PAYMENT,100,Currency.UIV);
+        Transaction t3 = new Transaction(Transaction.Type.WITHDRAWAL,100,Currency.UIV);
+
+        ArrayList<Transaction> tlist = new ArrayList<>();
+        tlist.add(t1);
+        tlist.add(t2);
+        tlist.add(t3);
+
+        am.getData().get(0).setTransactions(tlist);
+        am.writeData();
+//        am.loadData();
 
 //        UserManager um = new UserManager("Customers");
 //        um.loadData();

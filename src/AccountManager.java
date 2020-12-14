@@ -33,14 +33,18 @@ public class AccountManager extends DataManager<Account> {
         for(String userdata : allAccounts){
             String element[] = userdata.split(",");
             CharSequence accountType = element[1].subSequence(0,1);
+            ArrayList<Transaction> transactions = new ArrayList<>();
             if(((String)accountType).equals("S")){
-                getData().add(SavingsAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),Double.parseDouble(element[3]),Double.parseDouble(element[4])));
+                transactions = convertStringToTransaction(element[5]);
+                getData().add(SavingsAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),Double.parseDouble(element[3]),Double.parseDouble(element[4]),transactions));
             }
             else if(((String)accountType).equals("C")){
-                getData().add(CheckingAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2])));
+                transactions = convertStringToTransaction(element[3]);
+                getData().add(CheckingAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),transactions));
             }
             else {
-                getData().add(LoanAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),Double.parseDouble(element[3]),Double.parseDouble(element[4])));
+                transactions = convertStringToTransaction(element[5]);
+                getData().add(LoanAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),Double.parseDouble(element[3]),Double.parseDouble(element[4]),transactions));
             }
         }
 
@@ -59,11 +63,10 @@ public class AccountManager extends DataManager<Account> {
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
             ArrayList<Account> accounts= getData();
             for(Account s : accounts){
-                bw.write(s.getAccountInfo());
+                bw.write(s.getAccountInfo()+","+convertTranctionsToString(s.getTransactions()));
                 bw.newLine();
             }
             bw.close();
-
         } catch (FileNotFoundException e) {
             // File catch exception when initialization
             e.printStackTrace();
@@ -71,8 +74,35 @@ public class AccountManager extends DataManager<Account> {
             // BufferedWriter catch exception when close
             e.printStackTrace();
         }
-
     }
+
+    public String convertTranctionsToString(ArrayList<Transaction> transactions){
+        String tranction = " ";
+        for(int i = 0; i< transactions.size(); i++){
+            if(i == transactions.size()-1){
+                tranction+= transactions.get(i).toString();
+            }else {
+                tranction+= transactions.get(i).toString()+"|";
+            }
+        }
+        return tranction;
+    }
+
+    public ArrayList<Transaction> convertStringToTransaction(String transactionString) throws BankException {
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        String transaction[] = transactionString.split(",");
+        for(int i=0; i<transaction.length; i++){
+            String transactionElement [] = transaction[i].split("//|");
+            transactions.add(Transaction.loadTransaction(Transaction.Type.valueOf(transactionElement[0]),
+                                                            Double.parseDouble(transactionElement[1]),
+                                                            Currency.valueOf(transactionElement[2]),
+                                                            transactionElement[3]));
+        }
+        return transactions;
+    }
+
+
+
 
     /**
      * Add an account to the database.

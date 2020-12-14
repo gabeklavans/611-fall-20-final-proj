@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -31,6 +32,27 @@ public class Transaction {
         this.date = new Date();
     }
 
+    private Transaction(Type type, double amt, Currency currencyType, String Date) {
+        this.type = type;
+        this.amount = Currency.convert(amt, currencyType, Currency.UIV);
+        this.date = new Date();
+    }
+
+    /**
+     * Load the info for a pre-existing Savings Account and return the constructed
+     * account.
+     *
+     * @param type
+     * @param amt
+     * @param currencyType
+     * @param Date
+     * @throws BankException if the open date formatting is invalid
+     */
+    public static Transaction loadTransaction(Type type, double amt, Currency currencyType, String Date) throws BankException {
+        return new Transaction(type, amt,currencyType, Date);
+    }
+
+
     public Type getType() {
         return type;
     }
@@ -49,7 +71,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return getDate() + "," + getType() + "," + getAmount();
+        return getDate() + "-" + getType() + "-" + getAmount();
     }
 
 }
