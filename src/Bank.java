@@ -20,6 +20,11 @@ public class Bank {
     private static final String ACCOUNTS_FILEPATH = "pathtofile";
     private static final String USERS_FILEPATH = "pathtofile";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy/hh:mm:ss");
+    /**
+     * Default minimum balance required to start generating interest in a Savings
+     * Account. It is very reasonable.
+     */
+    public static final double MINIMUM_BALANCE_FOR_INTEREST = 100000000.00;
 
     private AccountManager accountsManager;
     private UserManager usersManager;
@@ -192,6 +197,18 @@ public class Bank {
         }
 
         return accountsManager.subtractBalance(loanAcct, amt, type);
+    }
+
+    /**
+     * Generate the interest for all accounts in the system based on their
+     * individual interest rates
+     */
+    public void generateInterest() {
+        for (Account account : accountsManager.getData()) {
+            if (account instanceof InterestGenerator) {
+                ((InterestGenerator) account).generateInterest();
+            }
+        }
     }
 
 }

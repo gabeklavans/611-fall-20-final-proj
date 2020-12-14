@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * A Savings Account functions similarly to a Checking Account but has the
  * additional function of gaining interest over time.
  */
-public class SavingsAccount extends Account {
+public class SavingsAccount extends Account implements InterestGenerator {
 
     /* set a very rational, profit-minded default interest rate in UIV */
     public static final double defaultInterestRate = Double.MIN_NORMAL;
@@ -75,27 +75,23 @@ public class SavingsAccount extends Account {
     }
 
     /**
-     * Calculate generated interest and add it to the current balance.
+     * Only generates the interest if the balance meets the minimum required to
+     * generate interest. This is defined per-account.
      */
+    @Override
     public void generateInterest() {
-        double generatedInterest = getBalance(Currency.UIV) * interestRate.getInterestRate(Currency.UIV);
-        deposit(generatedInterest, Currency.UIV);
+        if (getBalance(Currency.UIV) >= interestBalanceRequirement) {
+            double generatedInterest = getBalance(Currency.UIV) * interestRate.getInterestRate(Currency.UIV);
+            deposit(generatedInterest, Currency.UIV);
+        }
     }
 
-    /**
-     * 
-     * @param type The unit of currency to return the interest rate in
-     * @return The interest rate in terms of the specified unit of currency
-     */
+    @Override
     public double getInterestRate(Currency type) {
         return interestRate.getInterestRate(type);
     }
 
-    /**
-     * 
-     * @param rate The new interest rate
-     * @param type The unit of currency that the new interest rate is in terms of
-     */
+    @Override
     public void setInterestRate(double rate, Currency type) {
         interestRate.setInterestRate(rate, type);
     }
