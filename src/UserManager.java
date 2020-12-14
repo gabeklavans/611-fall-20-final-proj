@@ -60,7 +60,7 @@ public class UserManager extends DataManager<User> {
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
             ArrayList<User> data = getData();
             for (User s : data) {
-                UserData userdata = ((Customer) s).getUserinfo();
+                UserData userdata = ((Customer) s).getUserData();
                 bw.write(userdata.getStringinfo());
                 bw.newLine();
             }

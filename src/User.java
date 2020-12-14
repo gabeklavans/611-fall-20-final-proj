@@ -1,6 +1,16 @@
 public abstract class User {
-    private String name;
+    /** all customer's information in this bank **/
     private UserData userData;
 
-    public User(){};
+    public User(UserData userData) {
+        this.userData = userData;
+    };
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
 }

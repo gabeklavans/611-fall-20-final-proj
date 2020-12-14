@@ -35,7 +35,7 @@ public class Main {
         um.loadData();
         ArrayList<User> ud = um.getData();
         for(User i : ud){
-            System.out.println(((Customer)i).getUserinfo());
+            System.out.println(((Customer)i).getUserData());
         }
 //        um.getData().add(
 //                new Customer(
