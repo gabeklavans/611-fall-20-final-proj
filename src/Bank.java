@@ -17,8 +17,8 @@ public class Bank {
     /** Rate charged to the starting balance of a new savings/checking account */
     private static final double openAccountFeeRate = 0.1;
 
-    private static final String ACCOUNTS_FILEPATH = "pathtofile";
-    private static final String USERS_FILEPATH = "pathtofile";
+    private static final String ACCOUNTS_FILEPATH = "Customers";
+    private static final String USERS_FILEPATH = "Customers";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy/hh:mm:ss");
     /**
      * Default minimum balance required to start generating interest in a Savings
@@ -29,7 +29,7 @@ public class Bank {
     private AccountManager accountsManager;
     private UserManager usersManager;
 
-    private Bank(String accountsFilepath, String usersFilepath) {
+    private Bank(String accountsFilepath, String usersFilepath) throws BankException {
         accountsManager = new AccountManager(accountsFilepath);
         usersManager = new UserManager(usersFilepath);
     }
@@ -37,8 +37,9 @@ public class Bank {
     /**
      * 
      * @return an instance of the Bank, creating one if it does not exist yet
+     * @throws BankException
      */
-    public static Bank getBank() {
+    public static Bank getBank() throws BankException {
         if (bankManager == null) {
             bankManager = new Bank(ACCOUNTS_FILEPATH, USERS_FILEPATH);
         }

@@ -53,7 +53,7 @@ public enum Currency {
      * @return The converted amount in terms of the "to" currency
      */
     public static double convert(double amt, Currency from, Currency to) {
-        double amtInUiv = amt / from.getUivExchangeRate();
-        return amtInUiv * to.getUivExchangeRate();
+        double amtInUiv = amt * from.getUivExchangeRate();
+        return amtInUiv / to.getUivExchangeRate();
     }
 }

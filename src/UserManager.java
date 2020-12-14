@@ -12,12 +12,15 @@ import java.io.FileWriter;
  * Data manager for the users in the system
  */
 public class UserManager extends DataManager<User> {
-    private static String fileName = "CustomesData.csv"; /** file contains all customers' data **/
 
-
-    public UserManager(String filepath) {
-        super(filepath);
-
+    /**
+     * Create a new User Manager.
+     * 
+     * @param filepath
+     * @throws BankException
+     */
+    public UserManager(String filepath) throws BankException {
+        super(filepath, "CustomersData.csv");
     }
 
     /**
@@ -29,6 +32,7 @@ public class UserManager extends DataManager<User> {
     public void loadData() {
         // TODO Auto-generated method stub
         String filepath = getFilepath();
+        String fileName = getFileName();
         ArrayList<String> allCustomerData = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filepath + "/" + fileName));
@@ -56,7 +60,7 @@ public class UserManager extends DataManager<User> {
             File dir = new File(getFilepath());
             if (!dir.exists())
                 dir.mkdir();
-            File csv = new File(getFilepath() + '/' + fileName);
+            File csv = new File(getFilepath() + '/' + getFileName());
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
             ArrayList<User> data = getData();
             for (User s : data) {

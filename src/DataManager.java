@@ -6,12 +6,25 @@ import java.util.ArrayList;
  */
 public abstract class DataManager<T> {
 
+    /** file contains all customers' data **/
+    private String fileName;
+
     private String filepath;
     private ArrayList<T> data;
 
-    public DataManager(String filepath) {
-        this.filepath = filepath;
+    /**
+     * Create new DataManager and load in the data from the data files specified by
+     * the paths.
+     * 
+     * @param filePath
+     * @param fileName
+     * @throws BankException
+     */
+    public DataManager(String filePath, String fileName) throws BankException {
+        this.filepath = filePath;
+        this.fileName = fileName;
         this.data = new ArrayList<>();
+        loadData();
     }
 
     /**
@@ -30,7 +43,7 @@ public abstract class DataManager<T> {
 
     /**
      * 
-     * @return the string path to the data file that this manager reads/writes
+     * @return the string path to the data folder that this manager reads/writes
      *         from/to
      */
     public String getFilepath() {
@@ -43,6 +56,10 @@ public abstract class DataManager<T> {
      */
     public ArrayList<T> getData() {
         return data;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
 }

@@ -6,50 +6,49 @@ import java.util.ArrayList;
  */
 public class AccountManager extends DataManager<Account> {
 
-    private String fileName = "AccountsList.csv"; /** file contains all accounts' data **/
-    public AccountManager(String filepath) {
-        super(filepath);
+    /**
+     * 
+     * @throws BankException
+     **/
+    public AccountManager(String filepath) throws BankException {
+        super(filepath, "AccountsList.csv");
     }
 
-
     /**
-     * Load Accountdata from the AccountsList file and initialize the instance of Account based on the
-     * the data loaded, and add the instance to ArrayList<Account> data.
-     * */
+     * Load Accountdata from the AccountsList file and initialize the instance of
+     * Account based on the the data loaded, and add the instance to
+     * ArrayList<Account> data.
+     */
     @Override
     public void loadData() throws BankException {
         // TODO Auto-generated method stub
         ArrayList<String> allAccounts = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(getFilepath()+"/"+fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(getFilepath() + "/" + getFileName()));
             String line = null;
-            while((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 allAccounts.add(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        for(String userdata : allAccounts){
+        for (String userdata : allAccounts) {
             String element[] = userdata.split(",");
-            CharSequence accountType = element[1].subSequence(0,1);
+            CharSequence accountType = element[1].subSequence(0, 1);
             ArrayList<Transaction> transactions = new ArrayList<>();
-            if(((String)accountType).equals("S")){
+            if (((String) accountType).equals("S")) {
                 transactions = convertStringToTransaction(element[5]);
-                getData().add(SavingsAccount.loadAccount(element[0],element[1],
-                        Double.parseDouble(element[2]),Double.parseDouble(element[3]),
-                        Double.parseDouble(element[4]),transactions));
-            }
-            else if(((String)accountType).equals("C")){
+                getData().add(SavingsAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
+                        Double.parseDouble(element[3]), Double.parseDouble(element[4]), transactions));
+            } else if (((String) accountType).equals("C")) {
                 transactions = convertStringToTransaction(element[3]);
-                getData().add(CheckingAccount.loadAccount(element[0],element[1],
-                        Double.parseDouble(element[2]),transactions));
-            }
-            else {
-                transactions = convertStringToTransaction(element[4]);
-                getData().add(LoanAccount.loadAccount(element[0],element[1],
-                        Double.parseDouble(element[2]),Double.parseDouble(element[3]),
+                getData().add(CheckingAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
                         transactions));
+            } else {
+                transactions = convertStringToTransaction(element[4]);
+                getData().add(LoanAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
+                        Double.parseDouble(element[3]), transactions));
             }
         }
 
@@ -57,18 +56,19 @@ public class AccountManager extends DataManager<Account> {
 
     /**
      * Store the Accounts in to the AccountList file
-     * */
+     */
     @Override
     public void writeData() {
         // TODO Auto-generated method stub
         try {
             File dir = new File(getFilepath());
-            if(!dir.exists()) dir.mkdir();
-            File csv = new File(getFilepath()+'/'+fileName);
+            if (!dir.exists())
+                dir.mkdir();
+            File csv = new File(getFilepath() + '/' + getFileName());
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
-            ArrayList<Account> accounts= getData();
-            for(Account s : accounts){
-                bw.write(s.getAccountInfo()+","+convertTranctionsToString(s.getTransactions()));
+            ArrayList<Account> accounts = getData();
+            for (Account s : accounts) {
+                bw.write(s.getAccountInfo() + "," + convertTranctionsToString(s.getTransactions()));
                 bw.newLine();
             }
             bw.close();
@@ -82,18 +82,19 @@ public class AccountManager extends DataManager<Account> {
     }
 
     /**
-     * convert the the account's transactions Arraylist into a string version for writing it into file
+     * convert the the account's transactions Arraylist into a string version for
+     * writing it into file
      *
      * @param transactions
      */
 
-    public String convertTranctionsToString(ArrayList<Transaction> transactions){
+    public String convertTranctionsToString(ArrayList<Transaction> transactions) {
         String tranction = " ";
-        for(int i = 0; i< transactions.size(); i++){
-            if(i == transactions.size()-1){
-                tranction+= transactions.get(i).toString();
-            }else {
-                tranction+= transactions.get(i).toString()+"|";
+        for (int i = 0; i < transactions.size(); i++) {
+            if (i == transactions.size() - 1) {
+                tranction += transactions.get(i).toString();
+            } else {
+                tranction += transactions.get(i).toString() + "|";
             }
         }
         return tranction;
@@ -104,16 +105,15 @@ public class AccountManager extends DataManager<Account> {
      *
      * @param transactionString
      */
-    public ArrayList<Transaction> convertStringToTransaction(String transactionString) throws BankException,ArrayIndexOutOfBoundsException {
+    public ArrayList<Transaction> convertStringToTransaction(String transactionString)
+            throws BankException, ArrayIndexOutOfBoundsException {
         ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-        try{
+        try {
             String transaction[] = transactionString.split("\\|");
-            for(int i=0; i<transaction.length; i++){
-                String transactionElement [] = transaction[i].split("-");
+            for (int i = 0; i < transaction.length; i++) {
+                String transactionElement[] = transaction[i].split("-");
                 transactions.add(Transaction.loadTransaction(Transaction.Type.valueOf(transactionElement[1]),
-                        Double.parseDouble(transactionElement[2]),
-                        Currency.UIV,
-                        transactionElement[0]));
+                        Double.parseDouble(transactionElement[2]), Currency.UIV, transactionElement[0]));
             }
         } catch (BankException e) {
             e.printStackTrace();
@@ -122,9 +122,6 @@ public class AccountManager extends DataManager<Account> {
         }
         return transactions;
     }
-
-
-
 
     /**
      * Add an account to the database.
