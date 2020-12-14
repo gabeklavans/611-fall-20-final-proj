@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,10 +34,15 @@ public class Transaction {
         this.date = new Date();
     }
 
-    private Transaction(Type type, double amt, Currency currencyType, String Date) {
+    /** Private constructor used for loading a pre-existing Transaction */
+    private Transaction(Type type, double amt, Currency currencyType, String date) throws BankException {
         this.type = type;
         this.amount = Currency.convert(amt, currencyType, Currency.UIV);
-        this.date = new Date();
+        try {
+            this.date = Bank.DATE_FORMAT.parse(date);
+        } catch (ParseException e) {
+            throw new BankException("Invalid date format");
+        }
     }
 
     /**
@@ -48,11 +55,15 @@ public class Transaction {
      * @param Date
      * @throws BankException if the open date formatting is invalid
      */
-    public static Transaction loadTransaction(Type type, double amt, Currency currencyType, String Date) throws BankException {
-        return new Transaction(type, amt,currencyType, Date);
+    public static Transaction loadTransaction(Type type, double amt, Currency currencyType, String date)
+            throws BankException {
+        return new Transaction(type, amt, currencyType, date);
     }
 
-
+    /**
+     * 
+     * @return One of the Type enum strings (i.e. WITHDRAWAL, DEPOSIT, or PAYMENT)
+     */
     public Type getType() {
         return type;
     }
@@ -61,17 +72,13 @@ public class Transaction {
         return amount;
     }
 
-    /**
-     * 
-     * @return One of the Type enum strings (i.e. WITHDRAWAL, DEPOSIT, or PAYMENT)
-     */
     public Date getDate() {
         return date;
     }
 
     @Override
     public String toString() {
-        return getDate() + "-" + getType() + "-" + getAmount();
+        return Bank.DATE_FORMAT.format(getDate()) + "-" + getType() + "-" + getAmount();
     }
 
 }

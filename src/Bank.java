@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,7 @@ public class Bank {
 
     private static final String ACCOUNTS_FILEPATH = "pathtofile";
     private static final String USERS_FILEPATH = "pathtofile";
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy/hh:mm:ss");
 
     private AccountManager accountsManager;
     private UserManager usersManager;

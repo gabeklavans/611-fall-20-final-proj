@@ -39,6 +39,7 @@ public class CheckingAccount extends Account {
 
     @Override
     public String getAccountInfo() {
-        return getOpenDate() + "," + getAccountNumber() + "," + String.valueOf(getBalance(Currency.UIV));
+        return Bank.DATE_FORMAT.format(getOpenDate()) + "," + getAccountNumber() + ","
+                + String.valueOf(getBalance(Currency.UIV));
     }
 }

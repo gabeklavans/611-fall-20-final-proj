@@ -1,5 +1,4 @@
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -47,7 +46,7 @@ public abstract class Account {
     public Account(String openDate, String accountNumber, double balance, ArrayList<Transaction> transactions)
             throws BankException {
         try {
-            this.openDate = new SimpleDateFormat("MM/dd/yyyy").parse(openDate);
+            this.openDate = Bank.DATE_FORMAT.parse(openDate);
         } catch (ParseException e) {
             throw new BankException("Invalid account open date format.", e);
         }
