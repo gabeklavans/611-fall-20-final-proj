@@ -12,8 +12,7 @@ import java.io.FileWriter;
  * Data manager for the users in the system
  */
 public class UserManager extends DataManager<User> {
-    private static String fileName = "CustomesData.csv";
-//    private String fileName = "CustomersData.csv"; /** file contains all customers' data **/
+    private static String fileName = "CustomesData.csv"; /** file contains all customers' data **/
 
 
     public UserManager(String filepath) {
@@ -32,7 +31,6 @@ public class UserManager extends DataManager<User> {
         String filepath = getFilepath();
         ArrayList<String> allCustomerData = new ArrayList<>();
         try {
-            System.out.println(getFilepath());
             BufferedReader reader = new BufferedReader(new FileReader(filepath + "/" + fileName));
             String line = null;
             while ((line = reader.readLine()) != null) {

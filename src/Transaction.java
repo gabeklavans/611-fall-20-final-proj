@@ -52,7 +52,7 @@ public class Transaction {
      * @param type
      * @param amt
      * @param currencyType
-     * @param Date
+     * @param date
      * @throws BankException if the open date formatting is invalid
      */
     public static Transaction loadTransaction(Type type, double amt, Currency currencyType, String date)

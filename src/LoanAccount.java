@@ -38,8 +38,8 @@ public class LoanAccount extends Account {
     /**
      * Private constructor for loading a LoanAccount.
      */
-    private LoanAccount(String openDate, String accountNumber, double balance, double interestRate,
-            double interestBalanceRequirement, ArrayList<Transaction> transactions) throws BankException {
+    private LoanAccount(String openDate, String accountNumber, double balance, double interestRate
+            , ArrayList<Transaction> transactions) throws BankException {
         super(openDate, accountNumber, balance, transactions);
         this.interestRate = new Interest(interestRate, Currency.UIV);
     }
@@ -54,16 +54,15 @@ public class LoanAccount extends Account {
      * @param interestRate               The fraction of the balance generated for
      *                                   every interest payment (should be in UIV
      *                                   from database)
-     * @param interestBalanceRequirement The lowest balance that qualifies for
+     *                                   The lowest balance that qualifies for
      *                                   generating interest
      * @param transactions               The list of transactions this account kept
      *                                   track of
      * @throws BankException if the open date formatting is invalid
      */
     public static LoanAccount loadAccount(String openDate, String accountNumber, double balance, double interestRate,
-            double interestBalanceRequirement, ArrayList<Transaction> transactions) throws BankException {
-        return new LoanAccount(openDate, accountNumber, balance, interestRate, interestBalanceRequirement,
-                transactions);
+            ArrayList<Transaction> transactions) throws BankException {
+        return new LoanAccount(openDate, accountNumber, balance, interestRate, transactions);
     }
 
     /**
@@ -94,7 +93,7 @@ public class LoanAccount extends Account {
 
     @Override
     public String getAccountInfo() {
-        return Bank.DATE_FORMAT.format(getOpenDate()) + "," + getAccountNumber() + "," + getBalance(Currency.UIV) + ","
-                + String.valueOf(getInterestRate(Currency.UIV));
+        return Bank.DATE_FORMAT.format(getOpenDate()) + "," + getAccountNumber() + "," + getBalance(Currency.UIV)
+                + "," + getInterestRate(Currency.UIV);
     }
 }

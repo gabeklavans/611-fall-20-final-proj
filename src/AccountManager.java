@@ -36,15 +36,20 @@ public class AccountManager extends DataManager<Account> {
             ArrayList<Transaction> transactions = new ArrayList<>();
             if(((String)accountType).equals("S")){
                 transactions = convertStringToTransaction(element[5]);
-                getData().add(SavingsAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),Double.parseDouble(element[3]),Double.parseDouble(element[4]),transactions));
+                getData().add(SavingsAccount.loadAccount(element[0],element[1],
+                        Double.parseDouble(element[2]),Double.parseDouble(element[3]),
+                        Double.parseDouble(element[4]),transactions));
             }
             else if(((String)accountType).equals("C")){
                 transactions = convertStringToTransaction(element[3]);
-                getData().add(CheckingAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),transactions));
+                getData().add(CheckingAccount.loadAccount(element[0],element[1],
+                        Double.parseDouble(element[2]),transactions));
             }
             else {
-                transactions = convertStringToTransaction(element[5]);
-                getData().add(LoanAccount.loadAccount(element[0],element[1],Double.parseDouble(element[2]),Double.parseDouble(element[3]),Double.parseDouble(element[4]),transactions));
+                transactions = convertStringToTransaction(element[4]);
+                getData().add(LoanAccount.loadAccount(element[0],element[1],
+                        Double.parseDouble(element[2]),Double.parseDouble(element[3]),
+                        transactions));
             }
         }
 
@@ -76,6 +81,12 @@ public class AccountManager extends DataManager<Account> {
         }
     }
 
+    /**
+     * convert the the account's transactions Arraylist into a string version for writing it into file
+     *
+     * @param transactions
+     */
+
     public String convertTranctionsToString(ArrayList<Transaction> transactions){
         String tranction = " ";
         for(int i = 0; i< transactions.size(); i++){
@@ -88,15 +99,26 @@ public class AccountManager extends DataManager<Account> {
         return tranction;
     }
 
-    public ArrayList<Transaction> convertStringToTransaction(String transactionString) throws BankException {
+    /**
+     * convert the string version of transactions into an Arraylist<Transaction>
+     *
+     * @param transactionString
+     */
+    public ArrayList<Transaction> convertStringToTransaction(String transactionString) throws BankException,ArrayIndexOutOfBoundsException {
         ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-        String transaction[] = transactionString.split(",");
-        for(int i=0; i<transaction.length; i++){
-            String transactionElement [] = transaction[i].split("//|");
-            transactions.add(Transaction.loadTransaction(Transaction.Type.valueOf(transactionElement[0]),
-                                                            Double.parseDouble(transactionElement[1]),
-                                                            Currency.valueOf(transactionElement[2]),
-                                                            transactionElement[3]));
+        try{
+            String transaction[] = transactionString.split("\\|");
+            for(int i=0; i<transaction.length; i++){
+                String transactionElement [] = transaction[i].split("-");
+                transactions.add(Transaction.loadTransaction(Transaction.Type.valueOf(transactionElement[1]),
+                        Double.parseDouble(transactionElement[2]),
+                        Currency.UIV,
+                        transactionElement[0]));
+            }
+        } catch (BankException e) {
+            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return transactions;
         }
         return transactions;
     }
