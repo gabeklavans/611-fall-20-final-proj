@@ -16,8 +16,8 @@ public class Bank {
     /** Rate charged to the starting balance of a new savings/checking account */
     private static final double openAccountFeeRate = 0.1;
 
-    private static final String ACCOUNTS_FILEPATH = "path/to/file";
-    private static final String USERS_FILEPATH = "path/to/file";
+    private static final String ACCOUNTS_FILEPATH = "pathtofile";
+    private static final String USERS_FILEPATH = "pathtofile";
 
     private AccountManager accountsManager;
     private UserManager usersManager;
@@ -40,18 +40,44 @@ public class Bank {
 
     /**
      * 
-     * @return a deep copy of the list of accounts in the system
+     * @param username
+     * @param password
+     * @return True if the username existed and the password was correct
      */
-    public ArrayList<Account> getAccounts() {
-        return accountsManager.getData();
+    public boolean login(String username, String password) {
+        User user = usersManager.getUser(username);
+        // TODO: check the password
+        return false;
+    }
+
+    /**
+     * Create a new Customer user in the system.
+     * 
+     * @param username
+     * @param password
+     * @return The newly created user
+     * @implNote NOT IMPLEMENTED YET
+     */
+    public User registerNewCustomer(String username, String password) {
+        // TODO: Create new customer obj here
+        // usersManager.registerUser(user);
+        return null;
     }
 
     /**
      * 
-     * @return a deep copy of the list of users in the system
+     * @return a deep copy (read-only) of the list of accounts in the system
+     */
+    public ArrayList<Account> getAccounts() {
+        return new ArrayList<Account>(accountsManager.getData());
+    }
+
+    /**
+     * 
+     * @return a deep copy (read-only) of the list of users in the system
      */
     public ArrayList<User> getUsers() {
-        return usersManager.getData();
+        return new ArrayList<User>(usersManager.getData());
     }
 
     /**

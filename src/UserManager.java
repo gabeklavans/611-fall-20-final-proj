@@ -15,15 +15,16 @@ public class UserManager extends DataManager<User> {
     private static String fileName = "CustomesData.csv";
 //    private String fileName = "CustomersData.csv"; /** file contains all customers' data **/
 
+
     public UserManager(String filepath) {
         super(filepath);
 
     }
 
     /**
-     * Load Userdata from the CustomersData file and initialize the instance of User based on the
-     * the data loaded, and add the instance to ArrayList<User> data.
-     * */
+     * Load Userdata from the CustomersData file and initialize the instance of User
+     * based on the the data loaded, and add the instance to ArrayList<User> data.
+     */
 
     @Override
     public void loadData() {
@@ -32,35 +33,36 @@ public class UserManager extends DataManager<User> {
         ArrayList<String> allCustomerData = new ArrayList<>();
         try {
             System.out.println(getFilepath());
-            BufferedReader reader = new BufferedReader(new FileReader(filepath+"/"+fileName));
+            BufferedReader reader = new BufferedReader(new FileReader(filepath + "/" + fileName));
             String line = null;
-            while((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 allCustomerData.add(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(String userdata : allCustomerData){
+        for (String userdata : allCustomerData) {
             String element[] = userdata.split(",");
-            UserData newData = new UserData(element[0],element[1],element[2],element[3],element[4]);
+            UserData newData = new UserData(element[0], element[1], element[2], element[3], element[4]);
             getData().add(new Customer(newData));
         }
     }
 
     /**
      * Store the UserData in to the customers file
-     * */
+     */
     @Override
     public void writeData() {
         // TODO Auto-generated method stub
         try {
             File dir = new File(getFilepath());
-            if(!dir.exists()) dir.mkdir();
-            File csv = new File(getFilepath()+'/'+fileName);
+            if (!dir.exists())
+                dir.mkdir();
+            File csv = new File(getFilepath() + '/' + fileName);
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
             ArrayList<User> data = getData();
-            for(User s :data){
-                UserData userdata = ((Customer)s).getUserinfo();
+            for (User s : data) {
+                UserData userdata = ((Customer) s).getUserinfo();
                 bw.write(userdata.getStringinfo());
                 bw.newLine();
             }
@@ -74,8 +76,6 @@ public class UserManager extends DataManager<User> {
             e.printStackTrace();
         }
     }
-
-
 
     /**
      * Register an account with a user, adding it to their list of accounts and
@@ -97,6 +97,20 @@ public class UserManager extends DataManager<User> {
     public void registerUser(Customer user) {
         getData().add(user);
         writeData();
+    }
+
+    /**
+     * 
+     * @param username of the User to look for
+     * @return The found user, null if the user was not found
+     * @implNote NOT IMPLEMENTED YET
+     */
+    public User getUser(String username) {
+        for (User user : getData()) {
+            // TODO: Expose the username for a user so the check can be done here
+        }
+
+        return null;
     }
 
 }
