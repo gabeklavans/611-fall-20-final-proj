@@ -66,8 +66,8 @@ public class Bank {
      * @param collateral that the user is putting up to open their login account
      * @return The newly created user
      */
-    public User registerNewCustomer(String username, String password, String collateral) {
-        UserData userData = new UserData(username, password, collateral);
+    public User registerNewCustomer(String username, String password) {
+        UserData userData = new UserData(username, password);
         Customer newCustomer = new Customer(userData);
         usersManager.registerUser(newCustomer);
         return newCustomer;
@@ -138,11 +138,12 @@ public class Bank {
      * @param loanAmount
      * @param interestRate
      * @param type         of currency
+     * @param collateral   to give up for the Loan
      * @return True if the account was successfully created
      * @apiNote see LoanAccount class for default interest rate
      */
-    public boolean openLoan(Customer user, double loanAmount, double interestRate, Currency type) {
-        LoanAccount newAccount = new LoanAccount(loanAmount, interestRate, type);
+    public boolean openLoan(Customer user, double loanAmount, double interestRate, Currency type, String collateral) {
+        LoanAccount newAccount = new LoanAccount(loanAmount, interestRate, type, collateral);
 
         accountsManager.addAccount(newAccount);
         usersManager.registerAccountWithUser(user, newAccount);

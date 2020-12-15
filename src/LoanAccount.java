@@ -10,15 +10,17 @@ public class LoanAccount extends Account implements InterestGenerator {
     public static final double DEFAULT_INTEREST_RATE = 1; // It's 1! So low!
 
     private Interest interestRate;
+    private String collateral;
 
     /**
      * Create a Loan account with the default interest rate.
      * 
      * @param startingBalance
      * @param type            of currency
+     * @param collateral      to give up for the Loan
      */
-    public LoanAccount(double startingBalance, Currency type) {
-        this(startingBalance, DEFAULT_INTEREST_RATE, type);
+    public LoanAccount(double startingBalance, Currency type, String collateral) {
+        this(startingBalance, DEFAULT_INTEREST_RATE, type, collateral);
     }
 
     /**
@@ -29,19 +31,22 @@ public class LoanAccount extends Account implements InterestGenerator {
      *                        interest payment
      * @param type            The unit of currency that the interest rate is in
      *                        terms of
+     * @param collateral      to give up for the Loan
      */
-    public LoanAccount(double startingBalance, double interestRate, Currency type) {
+    public LoanAccount(double startingBalance, double interestRate, Currency type, String collateral) {
         super(startingBalance, type, "L");
         this.interestRate = new Interest(interestRate, type);
+        this.collateral = collateral;
     }
 
     /**
      * Private constructor for loading a LoanAccount.
      */
-    private LoanAccount(String openDate, String accountNumber, double balance, double interestRate
-            , ArrayList<Transaction> transactions) throws BankException {
+    private LoanAccount(String openDate, String accountNumber, double balance, double interestRate,
+            ArrayList<Transaction> transactions, String collateral) throws BankException {
         super(openDate, accountNumber, balance, transactions);
         this.interestRate = new Interest(interestRate, Currency.UIV);
+        this.collateral = collateral;
     }
 
     /**
@@ -51,18 +56,20 @@ public class LoanAccount extends Account implements InterestGenerator {
      * @param openDate
      * @param accountNumber
      * @param balance
-     * @param interestRate               The fraction of the balance generated for
-     *                                   every interest payment (should be in UIV
-     *                                   from database)
-     *                                   The lowest balance that qualifies for
-     *                                   generating interest
-     * @param transactions               The list of transactions this account kept
-     *                                   track of
+     * @param interestRate  The fraction of the balance generated for every interest
+     *                      payment (should be in UIV from database) The lowest
+     *                      balance that qualifies for generating interest
+     * @param transactions  The list of transactions this account kept track of
+     * @param collateral      to give up for the Loan
      * @throws BankException if the open date formatting is invalid
      */
     public static LoanAccount loadAccount(String openDate, String accountNumber, double balance, double interestRate,
-            ArrayList<Transaction> transactions) throws BankException {
-        return new LoanAccount(openDate, accountNumber, balance, interestRate, transactions);
+            ArrayList<Transaction> transactions, String collateral) throws BankException {
+        return new LoanAccount(openDate, accountNumber, balance, interestRate, transactions, collateral);
+    }
+
+    public String getCollateral() {
+        return collateral;
     }
 
     @Override
@@ -83,7 +90,7 @@ public class LoanAccount extends Account implements InterestGenerator {
 
     @Override
     public String getAccountInfo() {
-        return Bank.DATE_FORMAT.format(getOpenDate()) + "," + getAccountNumber() + "," + getBalance(Currency.UIV)
-                + "," + getInterestRate(Currency.UIV);
+        return Bank.DATE_FORMAT.format(getOpenDate()) + "," + getAccountNumber() + "," + getBalance(Currency.UIV) + ","
+                + getInterestRate(Currency.UIV);
     }
 }

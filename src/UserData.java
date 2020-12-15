@@ -6,12 +6,10 @@
 public class UserData {
     private String userName;
     private String loginPassword;
-    private String collateral;
 
-    public UserData(String userName, String loginPassword, String collateral) {
+    public UserData(String userName, String loginPassword) {
         this.userName = userName;
         this.loginPassword = loginPassword;
-        this.collateral = collateral;
     }
 
     @Override
@@ -19,12 +17,11 @@ public class UserData {
         return "UserData{" +
                 ", userName='" + userName + '\'' +
                 ", loginPassword='" + loginPassword + '\'' +
-                ", collateral='" + collateral + '\'' +
                 '}';
     }
 
     public String getStringInfo(){
-        return userName+','+loginPassword+','+collateral;
+        return userName+','+loginPassword;
     }
 
     public String getUserName() {
@@ -42,12 +39,5 @@ public class UserData {
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
     }
-
-    public String getCollateral() {
-        return collateral;
-    }
-
-    public void setCollateral(String collateral) {
-        this.collateral = collateral;
-    }
+    
 }
