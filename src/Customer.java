@@ -7,8 +7,6 @@ import java.util.ArrayList;
 public class Customer extends User {
     /** store customer's opened Accounts **/
     private ArrayList<Account> accounts;
-    /** path to access where user's bankAccount info stored **/
-    private String filepath;
 
     /**
      * create an instance of Customer. If the customer is an new customer, the
@@ -20,7 +18,6 @@ public class Customer extends User {
     public Customer(UserData userData) {
         super(userData);
         accounts = new ArrayList<>();
-        this.filepath = userData.getUserName() + "_statement";
     }
 
     public ArrayList<Account> getAccounts() {

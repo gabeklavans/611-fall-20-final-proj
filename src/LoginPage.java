@@ -79,7 +79,7 @@ public class LoginPage {
         registeredUserName = scanner.nextLine();
         System.out.println("Enter password");
         registeredPassword = scanner.nextLine();
-        registeredUserData = new UserData(registeredUserAccountID,registeredUserName,registeredPassword,"N","N");
+        registeredUserData = new UserData(registeredUserName,registeredPassword,"N");
         BankSystem.updateCustomersData(registeredUserData);
         this.customer = new Customer(registeredUserData);
         new ATM_CustomerInterface(this.customer);
@@ -107,7 +107,7 @@ public class LoginPage {
     public Customer initialCustomer(String data){
         String element[] = data.split(",");
                             /** 0.LoginAccountNumber, 1.Name, 2. password 3.account list 5.loan**/
-        UserData newData = new UserData(element[0],element[1],element[2],element[3],element[4]);
+        UserData newData = new UserData(element[0],element[1],element[2]);
         return new Customer(newData);
     }
 }

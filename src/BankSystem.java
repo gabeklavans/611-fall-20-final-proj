@@ -62,7 +62,7 @@ public class BankSystem {
             if(!dir.exists()) dir.mkdir();
             File csv = new File(filepath+'/'+fileName);
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
-            allCustomerData.add(userData.getStringinfo());
+            allCustomerData.add(userData.getStringInfo());
             for(String s :allCustomerData){
                 bw.write(s);
                 bw.newLine();

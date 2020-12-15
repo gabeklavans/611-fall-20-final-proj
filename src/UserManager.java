@@ -45,7 +45,7 @@ public class UserManager extends DataManager<User> {
         }
         for (String userdata : allCustomerData) {
             String element[] = userdata.split(",");
-            UserData newData = new UserData(element[0], element[1], element[2], element[3], element[4]);
+            UserData newData = new UserData(element[0], element[1], element[2]);
             getData().add(new Customer(newData));
         }
     }
@@ -65,7 +65,7 @@ public class UserManager extends DataManager<User> {
             ArrayList<User> data = getData();
             for (User s : data) {
                 UserData userdata = ((Customer) s).getUserData();
-                bw.write(userdata.getStringinfo());
+                bw.write(userdata.getStringInfo());
                 bw.newLine();
             }
             bw.close();
@@ -105,11 +105,12 @@ public class UserManager extends DataManager<User> {
      * 
      * @param username of the User to look for
      * @return The found user, null if the user was not found
-     * @implNote NOT IMPLEMENTED YET
      */
     public User getUser(String username) {
         for (User user : getData()) {
-            // TODO: Expose the username for a user so the check can be done here
+            if (user.getUserData().getUserName().equals(username)) {
+                return user;
+            }
         }
 
         return null;

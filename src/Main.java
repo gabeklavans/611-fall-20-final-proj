@@ -17,6 +17,10 @@ public class Main {
         // bank.withdrawMoney(accts.get(0), 500000, Currency.UIV);
         bank.depositMoney(accts.get(3), 1.00, Currency.DGC);
 
+        // bank.registerNewCustomer("hello", "hellothere", "mr obi wan");
+        // bank.openSavingsAccount((Customer) users.get(0), 1000000, Currency.UIV, SavingsAccount.defaultInterestRate,
+        //         Bank.MINIMUM_BALANCE_FOR_INTEREST);
+
 
 
 //         AccountManager am = new AccountManager("Customers");

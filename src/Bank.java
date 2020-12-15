@@ -50,12 +50,12 @@ public class Bank {
      * 
      * @param username
      * @param password
-     * @return True if the username existed and the password was correct
+     * @return True if the username existed and the password was correct (successful
+     *         login)
      */
     public boolean login(String username, String password) {
         User user = usersManager.getUser(username);
-        // TODO: check the password
-        return false;
+        return user.getUserData().getLoginPassword().equals(password);
     }
 
     /**
@@ -63,13 +63,14 @@ public class Bank {
      * 
      * @param username
      * @param password
+     * @param collateral that the user is putting up to open their login account
      * @return The newly created user
-     * @implNote NOT IMPLEMENTED YET
      */
-    public User registerNewCustomer(String username, String password) {
-        // TODO: Create new customer obj here
-        // usersManager.registerUser(user);
-        return null;
+    public User registerNewCustomer(String username, String password, String collateral) {
+        UserData userData = new UserData(username, password, collateral);
+        Customer newCustomer = new Customer(userData);
+        usersManager.registerUser(newCustomer);
+        return newCustomer;
     }
 
     /**
