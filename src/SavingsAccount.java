@@ -6,9 +6,6 @@ import java.util.ArrayList;
  */
 public class SavingsAccount extends Account implements InterestGenerator {
 
-    /* set a very rational, profit-minded default interest rate in UIV */
-    public static final double defaultInterestRate = Double.MIN_NORMAL;
-
     private Interest interestRate;
     private double interestBalanceRequirement; // TODO: May want to move this out of here and into a BankManager class
 
