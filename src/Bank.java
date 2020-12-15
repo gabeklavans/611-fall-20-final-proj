@@ -25,8 +25,6 @@ public class Bank {
      * Account. It is very reasonable.
      */
     public static final double MINIMUM_BALANCE_FOR_INTEREST = 100000000.00;
-    /** A very rational, profit-minded default interest rate in UIV */
-    public static final double DEFAULT_INTEREST_RATE = Double.MIN_NORMAL;
 
     private AccountManager accountsManager;
     private UserManager usersManager;

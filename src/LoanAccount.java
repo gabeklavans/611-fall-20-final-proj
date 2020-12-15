@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class LoanAccount extends Account implements InterestGenerator {
 
     /** A very rational, profit-minded default interest rate in UIV */
-    public static final double defaultInterestRate = 1; // It's 1! So low!
+    public static final double DEFAULT_INTEREST_RATE = 1; // It's 1! So low!
 
     private Interest interestRate;
 
@@ -18,7 +18,7 @@ public class LoanAccount extends Account implements InterestGenerator {
      * @param type            of currency
      */
     public LoanAccount(double startingBalance, Currency type) {
-        this(startingBalance, defaultInterestRate, type);
+        this(startingBalance, DEFAULT_INTEREST_RATE, type);
     }
 
     /**
