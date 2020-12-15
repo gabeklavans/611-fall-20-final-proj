@@ -7,10 +7,12 @@ public class UserData {
     private String userName;
     private String loginPassword;
     private String collateral;
+    private String accountList; /** String representation of a list which contains all user's account (Saving, Checking, Loan) **/
 
-    public UserData(String userName, String loginPassword, String collateral) {
+    public UserData(String userName, String loginPassword, String accountList, String collateral) {
         this.userName = userName;
         this.loginPassword = loginPassword;
+        this.accountList = accountList;
         this.collateral = collateral;
     }
 
@@ -19,12 +21,13 @@ public class UserData {
         return "UserData{" +
                 ", userName='" + userName + '\'' +
                 ", loginPassword='" + loginPassword + '\'' +
+                ", accountList='" + accountList + '\'' +
                 ", collateral='" + collateral + '\'' +
                 '}';
     }
 
     public String getStringInfo(){
-        return userName+','+loginPassword+','+collateral;
+        return userName+','+loginPassword+','+accountList+','+collateral;
     }
 
     public String getUserName() {
@@ -41,6 +44,14 @@ public class UserData {
 
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
+    }
+
+    public String getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(String accountList) {
+        this.accountList = accountList;
     }
 
     public String getCollateral() {

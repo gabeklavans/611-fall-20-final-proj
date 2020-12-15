@@ -45,7 +45,7 @@ public class UserManager extends DataManager<User> {
         }
         for (String userdata : allCustomerData) {
             String element[] = userdata.split(",");
-            UserData newData = new UserData(element[0], element[1], element[2]);
+            UserData newData = new UserData(element[0], element[1], element[2], element[3]);
             getData().add(new Customer(newData));
         }
     }

@@ -31,6 +31,16 @@ public class Customer extends User {
      */
     public void registerNewAccount(Account acct) {
         accounts.add(acct);
+        String acctList = "";
+        for (Account account : accounts) {
+            acctList += account.getAccountNumber() + "/";
+        }
+
+        // if (acctList.length() > 1) {
+        //     acctList = acctList.substring(1);
+        // }
+
+        getUserData().setAccountList(acctList);
     }
 
 }

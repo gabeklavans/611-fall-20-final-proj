@@ -165,4 +165,20 @@ public class AccountManager extends DataManager<Account> {
         return acct.getBalance(type);
     }
 
+    /**
+     * 
+     * @param accountId of the account to search for
+     * @return the account with the provided ID
+     * @throws BankException if the account could not be found
+     */
+    public Account getAccount(String accountId) throws BankException {
+        for (Account account : getData()) {
+            if (account.getAccountNumber().equals(accountId)) {
+                return account;
+            }
+        }
+
+        throw new BankException("The account with ID {" + accountId + "} could not be found in the system");
+    }
+
 }

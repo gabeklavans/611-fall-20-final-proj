@@ -15,11 +15,12 @@ public class Main {
         ArrayList<Account> accts = bank.getAccounts();
         // bank.depositMoney(accts.get(0), 100000000000.00, Currency.UIV);
         // bank.withdrawMoney(accts.get(0), 500000, Currency.UIV);
-        bank.depositMoney(accts.get(3), 1.00, Currency.DGC);
+        // bank.depositMoney(accts.get(3), 1.00, Currency.DGC);
 
         // bank.registerNewCustomer("hello", "hellothere", "mr obi wan");
-        // bank.openSavingsAccount((Customer) users.get(0), 1000000, Currency.UIV, SavingsAccount.defaultInterestRate,
+        // bank.openSavingsAccount((Customer) users.get(0), 1000000, Currency.UIV, SavingsAccount.DEFAULT_INTEREST_RATE,
         //         Bank.MINIMUM_BALANCE_FOR_INTEREST);
+        // bank.openCheckingAccount((Customer) users.get(1), 10.00, Currency.HYRU);
 
 
 

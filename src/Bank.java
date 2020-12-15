@@ -32,6 +32,20 @@ public class Bank {
     private Bank(String accountsFilepath, String usersFilepath) throws BankException {
         accountsManager = new AccountManager(accountsFilepath);
         usersManager = new UserManager(usersFilepath);
+
+        // Register all the accounts for each user to that user initially
+        for (User user : usersManager.getData()) {
+            if (user instanceof Customer) {
+                for (String accountId : user.getUserData().getAccountList().split("/")) {
+                    if (accountId.equals("")) {
+                        continue;
+                    }
+                    Account acct = accountsManager.getAccount(accountId);
+                    Customer customer = (Customer) user;
+                    customer.getAccounts().add(acct); // don't do this anywhere else...
+                }
+            }
+        }
     }
 
     /**
@@ -67,7 +81,7 @@ public class Bank {
      * @return The newly created user
      */
     public User registerNewCustomer(String username, String password, String collateral) {
-        UserData userData = new UserData(username, password, collateral);
+        UserData userData = new UserData(username, password, "", collateral);
         Customer newCustomer = new Customer(userData);
         usersManager.registerUser(newCustomer);
         return newCustomer;
