@@ -48,7 +48,7 @@ public class AccountManager extends DataManager<Account> {
             } else {
                 transactions = convertStringToTransaction(element[4]);
                 getData().add(LoanAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
-                        Double.parseDouble(element[3]), transactions));
+                        Double.parseDouble(element[3]), element[4], transactions));
             }
         }
 
