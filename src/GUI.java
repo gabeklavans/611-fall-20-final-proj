@@ -22,13 +22,14 @@ public class GUI implements ActionListener, ItemListener {
     private static JButton registerButton;
     private static JButton logoutButton;
     private static JButton userPortalButton;
-    private static JButton openCheckingAccountButton;
-    private static JButton openSavingsAccountButton;
-    private static JButton closeCheckingAccountButton;
-    private static JButton closeSavingsAccountButton;
+    private JButton openCheckingAccountButton;
+    private JButton openSavingsAccountButton;
+    private JButton closeCheckingAccountButton;
+    private JButton closeSavingsAccountButton;
+    private static JButton adminPortalButton;
 
     JFrame frame;
-    JPanel pane1, pane2, pane3, pane4, pane5, pane6, pane7, pane8, pane9, pane10, pane11, cardPane;
+    JPanel pane1, pane2, pane3, pane4, pane5, pane6, pane7, pane8, pane9, pane10, pane11, pane12, pane13, cardPane;
     CardLayout card;
 
     JPanel cards; //a panel that uses CardLayout
@@ -51,6 +52,12 @@ public class GUI implements ActionListener, ItemListener {
         pane9 = new JPanel();
         pane10 = new JPanel();
         pane11 = new JPanel();
+
+        // admin customers
+        pane12 = new JPanel();
+
+        // admin reports
+        pane13 = new JPanel();
         cardPane = new JPanel();
 
 //        pane1.setBackground(Color.BLACK);
@@ -93,6 +100,10 @@ public class GUI implements ActionListener, ItemListener {
 //
         createRequestLoanComponent(pane11);
 
+        createCustomersComponent(pane12);
+
+        createReportsComponent(pane13);
+
         card = new CardLayout();
 
         cardPane.setLayout(card);
@@ -107,6 +118,8 @@ public class GUI implements ActionListener, ItemListener {
         cardPane.add(pane9, "Deposit Money");
         cardPane.add(pane10, "Withdraw Money");
         cardPane.add(pane11, "Request Loan");
+        cardPane.add(pane12, "Customers");
+        cardPane.add(pane13, "Reports");
 
         frame.add(cardPane);
         //Display the window.
@@ -140,6 +153,52 @@ public class GUI implements ActionListener, ItemListener {
 ////        pane.add(comboBoxPane, BorderLayout.WEST);
 //        pane.add(card1, BorderLayout.CENTER);
 //    }
+
+    public void createCustomersComponent(JPanel panel) {
+        adminPortalButton = new JButton("Back");
+        adminPortalButton.setBounds(30, 30, 160, 25);
+        adminPortalListener apl = new adminPortalListener();
+        adminPortalButton.addActionListener(apl);
+        panel.add(adminPortalButton);
+
+        welcomeLabel = new JLabel("Check customers", SwingConstants.CENTER);
+        welcomeLabel.setBounds(145, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JButton allCustomers = new JButton("All Customers");
+        allCustomers.setBounds(75, 145, 150, 25);
+        panel.add(allCustomers);
+
+        JButton overdueCustomers = new JButton("Overdue Customers");
+        overdueCustomers.setBounds(225, 145, 200, 25);
+        panel.add(overdueCustomers);
+
+
+        panel.setLayout(null);
+    }
+
+    public void createReportsComponent(JPanel panel) {
+        adminPortalButton = new JButton("Back");
+        adminPortalButton.setBounds(30, 30, 160, 25);
+        adminPortalListener apl = new adminPortalListener();
+        adminPortalButton.addActionListener(apl);
+        panel.add(adminPortalButton);
+
+        welcomeLabel = new JLabel("Retrieve reports", SwingConstants.CENTER);
+        welcomeLabel.setBounds(145, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JButton completeReport = new JButton("Complete Report");
+        completeReport.setBounds(75, 145, 150, 25);
+        panel.add(completeReport);
+
+        JButton changesReport = new JButton("Changes Since Last Report");
+        changesReport.setBounds(225, 145, 200, 25);
+        panel.add(changesReport);
+
+
+        panel.setLayout(null);
+    }
 
     public void createRequestLoanComponent(JPanel panel) {
         userPortalButton = new JButton("Back");
@@ -278,12 +337,19 @@ public class GUI implements ActionListener, ItemListener {
         closeCheckingAccountButton.setBounds(150, 140, 200, 25);
         closeCheckingListener ccl = new closeCheckingListener();
         closeCheckingAccountButton.addActionListener(ccl);
+        closeCheckingAccountButton.setEnabled(false);
+//        if (openCheckingAccountButton.isEnabled()) {
+//            closeCheckingAccountButton.setEnabled(false);
+//        } else {
+//            closeCheckingAccountButton.setEnabled(true);
+//        }
         panel.add(closeCheckingAccountButton);
 
         closeSavingsAccountButton = new JButton("Savings Account");
         closeSavingsAccountButton.setBounds(150, 200, 200, 25);
         closeSavingsListener csl = new closeSavingsListener();
         closeSavingsAccountButton.addActionListener(csl);
+        closeSavingsAccountButton.setEnabled(false);
         panel.add(closeSavingsAccountButton);
 
         panel.setLayout(null);
@@ -381,8 +447,12 @@ public class GUI implements ActionListener, ItemListener {
         userLoginButton.addActionListener(ul);
         panel.add(userLoginButton);
 
-        welcomeLabel = new JLabel("Administrator Login");
-        welcomeLabel.setBounds(180, 95, 200, 25);
+        welcomeLabel = new JLabel("Administrator Login", SwingConstants.CENTER);
+//        welcomeLabel.setBounds(180, 95, 200, 25);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+
+        Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+        welcomeLabel.setBorder(raisedetched);
         panel.add(welcomeLabel);
 
         userLabel = new JLabel("Username");
@@ -537,10 +607,14 @@ public class GUI implements ActionListener, ItemListener {
 
         JButton button1 = new JButton("Customers");
         button1.setBounds(70, 150, 180, 25);
+        customersListener cl = new customersListener();
+        button1.addActionListener(cl);
         panel.add(button1);
 
         JButton button4 = new JButton("Reports");
         button4.setBounds(260, 150, 180, 25);
+        reportsListener rl = new reportsListener();
+        button4.addActionListener(rl);
         panel.add(button4);
 
         logoutButton = new JButton("Logout");
@@ -585,12 +659,29 @@ public class GUI implements ActionListener, ItemListener {
         cl.show(cards, (String)evt.getItem());
     }
 
+    class customersListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Check customers.");
+            card.show(cardPane, "Customers");
+        }
+    }
+
+    class reportsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Retrieve reports.");
+            card.show(cardPane, "Reports");
+        }
+    }
+
     class closeCheckingListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Close checking account.");
             if (e.getSource() == closeCheckingAccountButton) {
                 closeCheckingAccountButton.setEnabled(false);
+                openCheckingAccountButton.setEnabled(true);
             }
         }
     }
@@ -601,6 +692,7 @@ public class GUI implements ActionListener, ItemListener {
             System.out.println("> Close savings account.");
             if (e.getSource() == closeSavingsAccountButton) {
                 closeSavingsAccountButton.setEnabled(false);
+                openSavingsAccountButton.setEnabled(true);
             }
         }
     }
@@ -652,6 +744,7 @@ public class GUI implements ActionListener, ItemListener {
             System.out.println("> Open checking account.");
             if (e.getSource() == openCheckingAccountButton) {
                 openCheckingAccountButton.setEnabled(false);
+                closeCheckingAccountButton.setEnabled(true);
             }
         }
     }
@@ -662,6 +755,7 @@ public class GUI implements ActionListener, ItemListener {
             System.out.println("> Open savings account.");
             if (e.getSource() == openSavingsAccountButton) {
                 openSavingsAccountButton.setEnabled(false);
+                closeSavingsAccountButton.setEnabled(true);
             }
         }
     }
