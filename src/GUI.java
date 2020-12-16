@@ -8,7 +8,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GUI implements ActionListener, ItemListener {
+public class GUI implements ItemListener {
 
     private static JButton administratorLoginButton;
     private static JButton userLoginButton;
@@ -33,8 +33,6 @@ public class GUI implements ActionListener, ItemListener {
     CardLayout card;
 
     JPanel cards; //a panel that uses CardLayout
-    final static String userPanel = "User Login";
-    final static String adminPanel = "Administrator Login";
 
     public GUI() {
         frame = new JFrame("CardLayout Test");
@@ -52,56 +50,22 @@ public class GUI implements ActionListener, ItemListener {
         pane9 = new JPanel();
         pane10 = new JPanel();
         pane11 = new JPanel();
-
-        // admin customers
-        pane12 = new JPanel();
-
-        // admin reports
-        pane13 = new JPanel();
+        pane12 = new JPanel(); // admin customers
+        pane13 = new JPanel(); // admin reports
         cardPane = new JPanel();
 
-//        pane1.setBackground(Color.BLACK);
-//        pane2.setBackground(Color.BLUE);
-//        pane3.setBackground(Color.GREEN);
-
-//        JButton button1 = new JButton("Click me to change panel");
-//        button1.setBounds(10,10,280,10);
-//        button1.addActionListener(this);
-//        pane1.add(button1);
-
         createUserLoginComponent(pane1);
-
-
-//        JButton button2 = new JButton("Click me to change panel");
-//        button2.addActionListener(this);
-//        pane2.add(button2);
-
         createAdminLoginComponent(pane2);
-
-//        JButton button3 = new JButton("Click me to change panel");
-//        button3.addActionListener(this);
-//        pane3.add(button3);
-
         createRegisterComponent(pane3);
-
         createUserPortalComponent(pane4);
-
         createAdminPortalComponent(pane5);
-
         createOpenAccountComponent(pane6);
-
         createCloseAccountComponent(pane7);
-
         createBalancesComponent(pane8);
-
         createDepositMoneyComponent(pane9);
-//
         createWithdrawMoneyComponent(pane10);
-//
         createRequestLoanComponent(pane11);
-
         createCustomersComponent(pane12);
-
         createReportsComponent(pane13);
 
         card = new CardLayout();
@@ -122,264 +86,14 @@ public class GUI implements ActionListener, ItemListener {
         cardPane.add(pane13, "Reports");
 
         frame.add(cardPane);
-        //Display the window.
+        // Display the window.
         frame.setTitle("Fancy Bank ATM #611");
-//        frame.pack();
+        // frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-//    public void addComponentToPane(Container pane) {
-//        //Put the JComboBox in a JPanel to get a nicer look.
-//        JPanel comboBoxPane = new JPanel(); //use FlowLayout
-//        String comboBoxItems[] = { userPanel, adminPanel };
-//        JComboBox cb = new JComboBox(comboBoxItems);
-//        cb.setEditable(false);
-//        cb.addItemListener(this);
-//        comboBoxPane.add(cb);
-//
-//        //Create the "cards".
-//        JPanel card1 = new JPanel();
-//        createUserLoginComponent(card1);
-//
-//        JPanel card2 = new JPanel();
-//        createAdminLoginComponent(card2);
-//
-//        //Create the panel that contains the "cards".
-//        cards = new JPanel(new CardLayout());
-//        cards.add(card1, userPanel);
-//        cards.add(card2, adminPanel);
-//
-////        pane.add(comboBoxPane, BorderLayout.WEST);
-//        pane.add(card1, BorderLayout.CENTER);
-//    }
-
-    public void createCustomersComponent(JPanel panel) {
-        adminPortalButton = new JButton("Back");
-        adminPortalButton.setBounds(30, 30, 160, 25);
-        adminPortalListener apl = new adminPortalListener();
-        adminPortalButton.addActionListener(apl);
-        panel.add(adminPortalButton);
-
-        welcomeLabel = new JLabel("Check customers", SwingConstants.CENTER);
-        welcomeLabel.setBounds(145, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        JButton allCustomers = new JButton("All Customers");
-        allCustomers.setBounds(75, 145, 150, 25);
-        panel.add(allCustomers);
-
-        JButton overdueCustomers = new JButton("Overdue Customers");
-        overdueCustomers.setBounds(225, 145, 200, 25);
-        panel.add(overdueCustomers);
-
-
-        panel.setLayout(null);
-    }
-
-    public void createReportsComponent(JPanel panel) {
-        adminPortalButton = new JButton("Back");
-        adminPortalButton.setBounds(30, 30, 160, 25);
-        adminPortalListener apl = new adminPortalListener();
-        adminPortalButton.addActionListener(apl);
-        panel.add(adminPortalButton);
-
-        welcomeLabel = new JLabel("Retrieve reports", SwingConstants.CENTER);
-        welcomeLabel.setBounds(145, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        JButton completeReport = new JButton("Complete Report");
-        completeReport.setBounds(75, 145, 150, 25);
-        panel.add(completeReport);
-
-        JButton changesReport = new JButton("Changes Since Last Report");
-        changesReport.setBounds(225, 145, 200, 25);
-        panel.add(changesReport);
-
-
-        panel.setLayout(null);
-    }
-
-    public void createRequestLoanComponent(JPanel panel) {
-        userPortalButton = new JButton("Back");
-        userPortalButton.setBounds(30, 30, 160, 25);
-        userPortalListener upl = new userPortalListener();
-        userPortalButton.addActionListener(upl);
-        panel.add(userPortalButton);
-
-        welcomeLabel = new JLabel("Request loan", SwingConstants.CENTER);
-        welcomeLabel.setBounds(150, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        JTextField requestLoanField = new JTextField(5);
-        requestLoanField.setBounds(180, 145, 75, 25);
-        panel.add(requestLoanField);
-
-        JButton requestLoanButton = new JButton("Submit");
-        requestLoanButton.setBounds(250, 145, 80, 25);
-        panel.add(requestLoanButton);
-
-        panel.setLayout(null);
-    }
-
-    public void createDepositMoneyComponent(JPanel panel) {
-        userPortalButton = new JButton("Back");
-        userPortalButton.setBounds(30, 30, 160, 25);
-        userPortalListener upl = new userPortalListener();
-        userPortalButton.addActionListener(upl);
-        panel.add(userPortalButton);
-
-        welcomeLabel = new JLabel("Deposit money", SwingConstants.CENTER);
-        welcomeLabel.setBounds(150, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        JLabel checkingLabel = new JLabel("Checking: N/A");
-        checkingLabel.setBounds(100, 120, 200, 25);
-        panel.add(checkingLabel);
-
-        JLabel savingsLabel = new JLabel("Savings: N/A");
-        savingsLabel.setBounds(310, 120, 200, 25);
-        panel.add(savingsLabel);
-
-        JTextField checkingField = new JTextField(5);
-        checkingField.setBounds(80, 145, 75, 25);
-        panel.add(checkingField);
-
-        JButton checkingButton = new JButton("Submit");
-        checkingButton.setBounds(150, 145, 80, 25);
-        panel.add(checkingButton);
-
-        JTextField savingsField = new JTextField(5);
-        savingsField.setBounds(280, 145, 75, 25);
-        panel.add(savingsField);
-
-        JButton savingsButton = new JButton("Submit");
-        savingsButton.setBounds(350, 145, 80, 25);
-        panel.add(savingsButton);
-
-
-        panel.setLayout(null);
-    }
-
-    public void createWithdrawMoneyComponent(JPanel panel) {
-        userPortalButton = new JButton("Back");
-        userPortalButton.setBounds(30, 30, 160, 25);
-        userPortalListener upl = new userPortalListener();
-        userPortalButton.addActionListener(upl);
-        panel.add(userPortalButton);
-
-        welcomeLabel = new JLabel("Withdraw money", SwingConstants.CENTER);
-        welcomeLabel.setBounds(150, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        JLabel checkingLabel = new JLabel("Checking: N/A");
-        checkingLabel.setBounds(100, 120, 200, 25);
-        panel.add(checkingLabel);
-
-        JLabel savingsLabel = new JLabel("Savings: N/A");
-        savingsLabel.setBounds(310, 120, 200, 25);
-        panel.add(savingsLabel);
-
-        JTextField checkingField = new JTextField(5);
-        checkingField.setBounds(80, 145, 75, 25);
-        panel.add(checkingField);
-
-        JButton checkingButton = new JButton("Submit");
-        checkingButton.setBounds(150, 145, 80, 25);
-        panel.add(checkingButton);
-
-        JTextField savingsField = new JTextField(5);
-        savingsField.setBounds(280, 145, 75, 25);
-        panel.add(savingsField);
-
-        JButton savingsButton = new JButton("Submit");
-        savingsButton.setBounds(350, 145, 80, 25);
-        panel.add(savingsButton);
-
-
-        panel.setLayout(null);
-    }
-
-    public void createBalancesComponent(JPanel panel) {
-        userPortalButton = new JButton("Back");
-        userPortalButton.setBounds(30, 30, 160, 25);
-        userPortalListener upl = new userPortalListener();
-        userPortalButton.addActionListener(upl);
-        panel.add(userPortalButton);
-
-        welcomeLabel = new JLabel("View transactions and balances", SwingConstants.CENTER);
-        welcomeLabel.setBounds(150, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        JLabel checkingLabel = new JLabel("Checking: N/A");
-        checkingLabel.setBounds(100, 120, 200, 25);
-        panel.add(checkingLabel);
-
-        JLabel savingsLabel = new JLabel("Savings: N/A");
-        savingsLabel.setBounds(310, 120, 200, 25);
-        panel.add(savingsLabel);
-
-        panel.setLayout(null);
-    }
-
-    public void createCloseAccountComponent(JPanel panel) {
-        userPortalButton = new JButton("Back");
-        userPortalButton.setBounds(30, 30, 160, 25);
-        userPortalListener upl = new userPortalListener();
-        userPortalButton.addActionListener(upl);
-        panel.add(userPortalButton);
-
-        welcomeLabel = new JLabel("Close a Bank Account", SwingConstants.CENTER);
-        welcomeLabel.setBounds(150, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        closeCheckingAccountButton = new JButton("Checking Account");
-        closeCheckingAccountButton.setBounds(150, 140, 200, 25);
-        closeCheckingListener ccl = new closeCheckingListener();
-        closeCheckingAccountButton.addActionListener(ccl);
-        closeCheckingAccountButton.setEnabled(false);
-//        if (openCheckingAccountButton.isEnabled()) {
-//            closeCheckingAccountButton.setEnabled(false);
-//        } else {
-//            closeCheckingAccountButton.setEnabled(true);
-//        }
-        panel.add(closeCheckingAccountButton);
-
-        closeSavingsAccountButton = new JButton("Savings Account");
-        closeSavingsAccountButton.setBounds(150, 200, 200, 25);
-        closeSavingsListener csl = new closeSavingsListener();
-        closeSavingsAccountButton.addActionListener(csl);
-        closeSavingsAccountButton.setEnabled(false);
-        panel.add(closeSavingsAccountButton);
-
-        panel.setLayout(null);
-    }
-
-    public void createOpenAccountComponent(JPanel panel) {
-        userPortalButton = new JButton("Back");
-        userPortalButton.setBounds(30, 30, 160, 25);
-        userPortalListener upl = new userPortalListener();
-        userPortalButton.addActionListener(upl);
-        panel.add(userPortalButton);
-
-        welcomeLabel = new JLabel("Open a Bank Account", SwingConstants.CENTER);
-        welcomeLabel.setBounds(150, 95, 200, 25);
-        panel.add(welcomeLabel);
-
-        openCheckingAccountButton = new JButton("Checking Account");
-        openCheckingAccountButton.setBounds(150, 140, 200, 25);
-        openCheckingListener ocl = new openCheckingListener();
-        openCheckingAccountButton.addActionListener(ocl);
-        panel.add(openCheckingAccountButton);
-
-        openSavingsAccountButton = new JButton("Savings Account");
-        openSavingsAccountButton.setBounds(150, 200, 200, 25);
-        openSavingsListener osl = new openSavingsListener();
-        openSavingsAccountButton.addActionListener(osl);
-        panel.add(openSavingsAccountButton);
-
-        panel.setLayout(null);
-    }
+    /* Login Components */
 
     public void createUserLoginComponent(JPanel panel) {
         administratorLoginButton = new JButton("Administrator Login");
@@ -390,19 +104,8 @@ public class GUI implements ActionListener, ItemListener {
 
         welcomeLabel = new JLabel("Welcome to your User Portal", SwingConstants.CENTER);
         welcomeLabel.setBounds(150, 95, 200, 25);
-
-        Border blackline = BorderFactory.createLineBorder(Color.black);
-//        welcomeLabel.setBorder(blackline);
-//        welcomeLabel.setForeground(Color.blue);
-//        welcomeLabel.setBackground(Color.lightGray);
-//        welcomeLabel.setOpaque(true);
-
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         welcomeLabel.setBorder(loweredetched);
-
-//        TitledBorder title = BorderFactory.createTitledBorder("title");
-//        welcomeLabel.setBorder(title);
-
         panel.add(welcomeLabel);
 
         userLabel = new JLabel("Username");
@@ -448,7 +151,6 @@ public class GUI implements ActionListener, ItemListener {
         panel.add(userLoginButton);
 
         welcomeLabel = new JLabel("Administrator Login", SwingConstants.CENTER);
-//        welcomeLabel.setBounds(180, 95, 200, 25);
         welcomeLabel.setBounds(150, 95, 200, 25);
 
         Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
@@ -516,26 +218,17 @@ public class GUI implements ActionListener, ItemListener {
         panel.setLayout(null);
     }
 
-    public void createUserPortalComponent(JPanel panel) {
-//        administratorLoginButton = new JButton("Administrator Login");
-//        administratorLoginButton.setBounds(30, 30, 160, 25);
-//        adminLoginListener al = new adminLoginListener();
-//        administratorLoginButton.addActionListener(al);
-//        panel.add(administratorLoginButton);
+    /* Portal Components */
 
+    public void createUserPortalComponent(JPanel panel) {
         welcomeLabel = new JLabel("User Portal");
         welcomeLabel.setBounds(220, 95, 200, 25);
         panel.add(welcomeLabel);
-
-//        userLabel = new JLabel("Username");
-//        userLabel.setBounds(110, 140, 80, 25);
-//        panel.add(userLabel);
 
         JButton button1 = new JButton("Open Bank Account");
         button1.setBounds(70, 150, 180, 25);
         openBankAccountListener obal = new openBankAccountListener();
         button1.addActionListener(obal);
-
         panel.add(button1);
 
         JButton button2 = new JButton("Close Bank Account");
@@ -569,27 +262,6 @@ public class GUI implements ActionListener, ItemListener {
         requestLoanListener rll = new requestLoanListener();
         button6.addActionListener(rll);
         panel.add(button6);
-
-//        userText = new JTextField(20);
-//        userText.setBounds(200, 140, 165, 25);
-//        panel.add(userText);
-//
-//        passwordLabel = new JLabel("Password");
-//        passwordLabel.setBounds(110, 180, 80, 25);
-//        panel.add(passwordLabel);
-//
-//        passwordText = new JPasswordField();
-//        passwordText.setBounds(200, 180, 165, 25);
-//        panel.add(passwordText);
-//
-//        loginButton = new JButton("User Login");
-//        loginButton.setBounds(190, 225, 100, 25);
-//        loginButton.addActionListener(new LoginGUI());
-//        panel.add(loginButton);
-//
-//        registerLabel = new JLabel("Need an account?");
-//        registerLabel.setBounds(140, 300, 120, 25);
-//        panel.add(registerLabel);
 
         logoutButton = new JButton("Logout");
         logoutButton.setBounds(30, 320, 90, 25);
@@ -626,9 +298,226 @@ public class GUI implements ActionListener, ItemListener {
         panel.setLayout(null);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        card.next(cardPane);
+    /* User Components */
+
+    public void createOpenAccountComponent(JPanel panel) {
+        userPortalButton = new JButton("Back");
+        userPortalButton.setBounds(30, 30, 160, 25);
+        userPortalListener upl = new userPortalListener();
+        userPortalButton.addActionListener(upl);
+        panel.add(userPortalButton);
+
+        welcomeLabel = new JLabel("Open a Bank Account", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        openCheckingAccountButton = new JButton("Checking Account");
+        openCheckingAccountButton.setBounds(150, 140, 200, 25);
+        openCheckingListener ocl = new openCheckingListener();
+        openCheckingAccountButton.addActionListener(ocl);
+        panel.add(openCheckingAccountButton);
+
+        openSavingsAccountButton = new JButton("Savings Account");
+        openSavingsAccountButton.setBounds(150, 200, 200, 25);
+        openSavingsListener osl = new openSavingsListener();
+        openSavingsAccountButton.addActionListener(osl);
+        panel.add(openSavingsAccountButton);
+
+        panel.setLayout(null);
+    }
+
+    public void createCloseAccountComponent(JPanel panel) {
+        userPortalButton = new JButton("Back");
+        userPortalButton.setBounds(30, 30, 160, 25);
+        userPortalListener upl = new userPortalListener();
+        userPortalButton.addActionListener(upl);
+        panel.add(userPortalButton);
+
+        welcomeLabel = new JLabel("Close a Bank Account", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        closeCheckingAccountButton = new JButton("Checking Account");
+        closeCheckingAccountButton.setBounds(150, 140, 200, 25);
+        closeCheckingListener ccl = new closeCheckingListener();
+        closeCheckingAccountButton.addActionListener(ccl);
+        closeCheckingAccountButton.setEnabled(false);
+        panel.add(closeCheckingAccountButton);
+
+        closeSavingsAccountButton = new JButton("Savings Account");
+        closeSavingsAccountButton.setBounds(150, 200, 200, 25);
+        closeSavingsListener csl = new closeSavingsListener();
+        closeSavingsAccountButton.addActionListener(csl);
+        closeSavingsAccountButton.setEnabled(false);
+        panel.add(closeSavingsAccountButton);
+
+        panel.setLayout(null);
+    }
+
+    public void createBalancesComponent(JPanel panel) {
+        userPortalButton = new JButton("Back");
+        userPortalButton.setBounds(30, 30, 160, 25);
+        userPortalListener upl = new userPortalListener();
+        userPortalButton.addActionListener(upl);
+        panel.add(userPortalButton);
+
+        welcomeLabel = new JLabel("View transactions and balances", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JLabel checkingLabel = new JLabel("Checking: N/A");
+        checkingLabel.setBounds(100, 120, 200, 25);
+        panel.add(checkingLabel);
+
+        JLabel savingsLabel = new JLabel("Savings: N/A");
+        savingsLabel.setBounds(310, 120, 200, 25);
+        panel.add(savingsLabel);
+
+        panel.setLayout(null);
+    }
+
+    public void createDepositMoneyComponent(JPanel panel) {
+        userPortalButton = new JButton("Back");
+        userPortalButton.setBounds(30, 30, 160, 25);
+        userPortalListener upl = new userPortalListener();
+        userPortalButton.addActionListener(upl);
+        panel.add(userPortalButton);
+
+        welcomeLabel = new JLabel("Deposit money", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JLabel checkingLabel = new JLabel("Checking: N/A");
+        checkingLabel.setBounds(100, 120, 200, 25);
+        panel.add(checkingLabel);
+
+        JLabel savingsLabel = new JLabel("Savings: N/A");
+        savingsLabel.setBounds(310, 120, 200, 25);
+        panel.add(savingsLabel);
+
+        JTextField checkingField = new JTextField(5);
+        checkingField.setBounds(80, 145, 75, 25);
+        panel.add(checkingField);
+
+        JButton checkingButton = new JButton("Submit");
+        checkingButton.setBounds(150, 145, 80, 25);
+        panel.add(checkingButton);
+
+        JTextField savingsField = new JTextField(5);
+        savingsField.setBounds(280, 145, 75, 25);
+        panel.add(savingsField);
+
+        JButton savingsButton = new JButton("Submit");
+        savingsButton.setBounds(350, 145, 80, 25);
+        panel.add(savingsButton);
+
+        panel.setLayout(null);
+    }
+
+    public void createWithdrawMoneyComponent(JPanel panel) {
+        userPortalButton = new JButton("Back");
+        userPortalButton.setBounds(30, 30, 160, 25);
+        userPortalListener upl = new userPortalListener();
+        userPortalButton.addActionListener(upl);
+        panel.add(userPortalButton);
+
+        welcomeLabel = new JLabel("Withdraw money", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JLabel checkingLabel = new JLabel("Checking: N/A");
+        checkingLabel.setBounds(100, 120, 200, 25);
+        panel.add(checkingLabel);
+
+        JLabel savingsLabel = new JLabel("Savings: N/A");
+        savingsLabel.setBounds(310, 120, 200, 25);
+        panel.add(savingsLabel);
+
+        JTextField checkingField = new JTextField(5);
+        checkingField.setBounds(80, 145, 75, 25);
+        panel.add(checkingField);
+
+        JButton checkingButton = new JButton("Submit");
+        checkingButton.setBounds(150, 145, 80, 25);
+        panel.add(checkingButton);
+
+        JTextField savingsField = new JTextField(5);
+        savingsField.setBounds(280, 145, 75, 25);
+        panel.add(savingsField);
+
+        JButton savingsButton = new JButton("Submit");
+        savingsButton.setBounds(350, 145, 80, 25);
+        panel.add(savingsButton);
+
+        panel.setLayout(null);
+    }
+
+    public void createRequestLoanComponent(JPanel panel) {
+        userPortalButton = new JButton("Back");
+        userPortalButton.setBounds(30, 30, 160, 25);
+        userPortalListener upl = new userPortalListener();
+        userPortalButton.addActionListener(upl);
+        panel.add(userPortalButton);
+
+        welcomeLabel = new JLabel("Request loan", SwingConstants.CENTER);
+        welcomeLabel.setBounds(150, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JTextField requestLoanField = new JTextField(5);
+        requestLoanField.setBounds(180, 145, 75, 25);
+        panel.add(requestLoanField);
+
+        JButton requestLoanButton = new JButton("Submit");
+        requestLoanButton.setBounds(250, 145, 80, 25);
+        panel.add(requestLoanButton);
+
+        panel.setLayout(null);
+    }
+
+    /* Admin Components */
+
+    public void createCustomersComponent(JPanel panel) {
+        adminPortalButton = new JButton("Back");
+        adminPortalButton.setBounds(30, 30, 160, 25);
+        adminPortalListener apl = new adminPortalListener();
+        adminPortalButton.addActionListener(apl);
+        panel.add(adminPortalButton);
+
+        welcomeLabel = new JLabel("Check customers", SwingConstants.CENTER);
+        welcomeLabel.setBounds(145, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JButton allCustomers = new JButton("All Customers");
+        allCustomers.setBounds(75, 145, 150, 25);
+        panel.add(allCustomers);
+
+        JButton overdueCustomers = new JButton("Overdue Customers");
+        overdueCustomers.setBounds(225, 145, 200, 25);
+        panel.add(overdueCustomers);
+
+        panel.setLayout(null);
+    }
+
+    public void createReportsComponent(JPanel panel) {
+        adminPortalButton = new JButton("Back");
+        adminPortalButton.setBounds(30, 30, 160, 25);
+        adminPortalListener apl = new adminPortalListener();
+        adminPortalButton.addActionListener(apl);
+        panel.add(adminPortalButton);
+
+        welcomeLabel = new JLabel("Retrieve reports", SwingConstants.CENTER);
+        welcomeLabel.setBounds(145, 95, 200, 25);
+        panel.add(welcomeLabel);
+
+        JButton completeReport = new JButton("Complete Report");
+        completeReport.setBounds(75, 145, 150, 25);
+        panel.add(completeReport);
+
+        JButton changesReport = new JButton("Changes Since Last Report");
+        changesReport.setBounds(225, 145, 200, 25);
+        panel.add(changesReport);
+
+        panel.setLayout(null);
     }
 
     public static void main(String args[]) {
@@ -653,25 +542,82 @@ public class GUI implements ActionListener, ItemListener {
         GUI test = new GUI();
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent evt) {
-        CardLayout cl = (CardLayout)(cards.getLayout());
-        cl.show(cards, (String)evt.getItem());
-    }
+    /* Login Button Listeners */
 
-    class customersListener implements ActionListener {
+    class userLoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("> Check customers.");
-            card.show(cardPane, "Customers");
+            System.out.println("> User login.");
+            card.show(cardPane, "User Login");
         }
     }
 
-    class reportsListener implements ActionListener {
+    class registerListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("> Retrieve reports.");
-            card.show(cardPane, "Reports");
+            System.out.println("> Register button clicked.");
+            card.show(cardPane, "Register");
+        }
+    }
+
+    class adminLoginListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Administrator login.");
+            card.show(cardPane, "Administrator Login");
+        }
+    }
+
+
+    class userPortalListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Navigating to user portal.");
+            card.show(cardPane, "User Portal");
+        }
+    }
+
+    /* User Portal Listeners */
+
+    // Open Bank Account
+
+    class openBankAccountListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Opening a bank account screen.");
+            card.show(cardPane, "Open Bank Account");
+        }
+    }
+
+    class openCheckingListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Open checking account.");
+            if (e.getSource() == openCheckingAccountButton) {
+                openCheckingAccountButton.setEnabled(false);
+                closeCheckingAccountButton.setEnabled(true);
+            }
+        }
+    }
+
+    class openSavingsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Open savings account.");
+            if (e.getSource() == openSavingsAccountButton) {
+                openSavingsAccountButton.setEnabled(false);
+                closeSavingsAccountButton.setEnabled(true);
+            }
+        }
+    }
+
+    // Close Bank Account
+
+    class closeBankAccountListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Closing a bank account screen.");
+            card.show(cardPane, "Close Bank Account");
         }
     }
 
@@ -697,29 +643,7 @@ public class GUI implements ActionListener, ItemListener {
         }
     }
 
-    class closeBankAccountListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Closing a bank account screen.");
-            card.show(cardPane, "Close Bank Account");
-        }
-    }
-
-    class depositMoneyListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Deposit money screen.");
-            card.show(cardPane, "Deposit Money");
-        }
-    }
-
-    class withdrawMoneyListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Withdraw money screen.");
-            card.show(cardPane, "Withdraw Money");
-        }
-    }
+    // View Balances
 
     class viewBalancesListener implements ActionListener {
         @Override
@@ -729,6 +653,28 @@ public class GUI implements ActionListener, ItemListener {
         }
     }
 
+    // Deposit Money
+
+    class depositMoneyListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Deposit money screen.");
+            card.show(cardPane, "Deposit Money");
+        }
+    }
+
+    // Withdraw Money
+
+    class withdrawMoneyListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Withdraw money screen.");
+            card.show(cardPane, "Withdraw Money");
+        }
+    }
+
+    // Request Loan
+
     class requestLoanListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -737,68 +683,7 @@ public class GUI implements ActionListener, ItemListener {
         }
     }
 
-
-    class openCheckingListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Open checking account.");
-            if (e.getSource() == openCheckingAccountButton) {
-                openCheckingAccountButton.setEnabled(false);
-                closeCheckingAccountButton.setEnabled(true);
-            }
-        }
-    }
-
-    class openSavingsListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Open savings account.");
-            if (e.getSource() == openSavingsAccountButton) {
-                openSavingsAccountButton.setEnabled(false);
-                closeSavingsAccountButton.setEnabled(true);
-            }
-        }
-    }
-
-    class openBankAccountListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Opening a bank account screen.");
-            card.show(cardPane, "Open Bank Account");
-        }
-    }
-
-    class adminLoginListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Administrator login.");
-            card.show(cardPane, "Administrator Login");
-        }
-    }
-
-    class userLoginListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> User login.");
-            card.show(cardPane, "User Login");
-        }
-    }
-
-    class registerListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Register button clicked.");
-            card.show(cardPane, "Register");
-        }
-    }
-
-    class userPortalListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("> Navigating to user portal.");
-            card.show(cardPane, "User Portal");
-        }
-    }
+    /* Admin Portal Listeners */
 
     class adminPortalListener implements ActionListener {
         @Override
@@ -806,5 +691,33 @@ public class GUI implements ActionListener, ItemListener {
             System.out.println("> Navigating to admin portal.");
             card.show(cardPane, "Admin Portal");
         }
+    }
+
+    // Customers
+
+    class customersListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Check customers.");
+            card.show(cardPane, "Customers");
+        }
+    }
+
+    // Reports
+
+    class reportsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Retrieve reports.");
+            card.show(cardPane, "Reports");
+        }
+    }
+
+    /* Override Methods */
+
+    @Override
+    public void itemStateChanged(ItemEvent evt) {
+        CardLayout cl = (CardLayout)(cards.getLayout());
+        cl.show(cards, (String)evt.getItem());
     }
 }
