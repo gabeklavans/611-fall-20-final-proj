@@ -14,10 +14,19 @@ public class GUI implements ItemListener {
     private static JButton userLoginButton;
     private static JLabel welcomeLabel;
     private static JLabel userLabel;
-    private static JTextField userText;
     private static JLabel passwordLabel;
-    private static JPasswordField passwordText;
-    private static JButton loginButton;
+
+    private JTextField userTextRegister;
+    private JPasswordField passwordTextRegister;
+    private JTextField userTextLogin;
+    private JPasswordField passwordTextLogin;
+    private JTextField userTextAdmin;
+    private JPasswordField passwordTextAdmin;
+
+    private static JButton loginButtonUser;
+    private static JButton loginButtonRegister;
+    private static JButton loginButtonAdmin;
+
     private static JLabel registerLabel;
     private static JButton registerButton;
     private static JButton logoutButton;
@@ -27,6 +36,8 @@ public class GUI implements ItemListener {
     private JButton closeCheckingAccountButton;
     private JButton closeSavingsAccountButton;
     private static JButton adminPortalButton;
+    User currentUser;
+    Customer currentCustomer = (Customer) currentUser;
 
     JFrame frame;
     JPanel pane1, pane2, pane3, pane4, pane5, pane6, pane7, pane8, pane9, pane10, pane11, pane12, pane13, cardPane;
@@ -112,23 +123,23 @@ public class GUI implements ItemListener {
         userLabel.setBounds(110, 140, 80, 25);
         panel.add(userLabel);
 
-        userText = new JTextField(20);
-        userText.setBounds(200, 140, 165, 25);
-        panel.add(userText);
+        userTextLogin = new JTextField();
+        userTextLogin.setBounds(200, 140, 165, 25);
+        panel.add(userTextLogin);
 
         passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(110, 180, 80, 25);
         panel.add(passwordLabel);
 
-        passwordText = new JPasswordField();
-        passwordText.setBounds(200, 180, 165, 25);
-        panel.add(passwordText);
+        passwordTextLogin = new JPasswordField();
+        passwordTextLogin.setBounds(200, 180, 165, 25);
+        panel.add(passwordTextLogin);
 
-        loginButton = new JButton("User Login");
-        loginButton.setBounds(190, 225, 100, 25);
+        loginButtonUser = new JButton("User Login");
+        loginButtonUser.setBounds(190, 225, 100, 25);
         userPortalListener upl = new userPortalListener();
-        loginButton.addActionListener(upl);
-        panel.add(loginButton);
+        loginButtonUser.addActionListener(upl);
+        panel.add(loginButtonUser);
 
         registerLabel = new JLabel("Need an account?");
         registerLabel.setBounds(140, 300, 120, 25);
@@ -161,23 +172,23 @@ public class GUI implements ItemListener {
         userLabel.setBounds(110, 140, 80, 25);
         panel.add(userLabel);
 
-        userText = new JTextField(20);
-        userText.setBounds(200, 140, 165, 25);
-        panel.add(userText);
+        userTextAdmin = new JTextField(20);
+        userTextAdmin.setBounds(200, 140, 165, 25);
+        panel.add(userTextAdmin);
 
         passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(110, 180, 80, 25);
         panel.add(passwordLabel);
 
-        passwordText = new JPasswordField();
-        passwordText.setBounds(200, 180, 165, 25);
-        panel.add(passwordText);
+        passwordTextAdmin = new JPasswordField();
+        passwordTextAdmin.setBounds(200, 180, 165, 25);
+        panel.add(passwordTextAdmin);
 
-        loginButton = new JButton("Administrator Login");
-        loginButton.setBounds(170, 225, 150, 25);
+        loginButtonAdmin = new JButton("Administrator Login");
+        loginButtonAdmin.setBounds(170, 225, 150, 25);
         adminPortalListener apl = new adminPortalListener();
-        loginButton.addActionListener(apl);
-        panel.add(loginButton);
+        loginButtonAdmin.addActionListener(apl);
+        panel.add(loginButtonAdmin);
 
         panel.setLayout(null);
     }
@@ -197,23 +208,23 @@ public class GUI implements ItemListener {
         userLabel.setBounds(110, 140, 80, 25);
         panel.add(userLabel);
 
-        userText = new JTextField(20);
-        userText.setBounds(200, 140, 165, 25);
-        panel.add(userText);
+        userTextRegister = new JTextField(20);
+        userTextRegister.setBounds(200, 140, 165, 25);
+        panel.add(userTextRegister);
 
         passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(110, 180, 80, 25);
         panel.add(passwordLabel);
 
-        passwordText = new JPasswordField();
-        passwordText.setBounds(200, 180, 165, 25);
-        panel.add(passwordText);
+        passwordTextRegister = new JPasswordField();
+        passwordTextRegister.setBounds(200, 180, 165, 25);
+        panel.add(passwordTextRegister);
 
-        loginButton = new JButton("Register");
-        loginButton.setBounds(190, 225, 100, 25);
+        loginButtonRegister = new JButton("Register");
+        loginButtonRegister.setBounds(190, 225, 100, 25);
         userPortalListener upl = new userPortalListener();
-        loginButton.addActionListener(upl);
-        panel.add(loginButton);
+        loginButtonRegister.addActionListener(upl);
+        panel.add(loginButtonRegister);
 
         panel.setLayout(null);
     }
@@ -544,11 +555,27 @@ public class GUI implements ItemListener {
 
     /* Login Button Listeners */
 
-    class userLoginListener implements ActionListener {
+    class userPortalListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("> User login.");
-            card.show(cardPane, "User Login");
+            System.out.println("> Navigating to user portal.");
+            boolean loginSuccess = false;
+            if (e.getSource() == loginButtonUser) {
+                String username = userTextLogin.getText();
+                System.out.println("Welcome " + username);
+                String passText = new String(passwordTextLogin.getPassword());
+                System.out.println("Hello " + passText);
+                loginSuccess = Bank.getBank().login(username, passText);
+                System.out.println(loginSuccess);
+            } else if (e.getSource() == loginButtonRegister) {
+                String username = userTextLogin.getText();
+                System.out.println("Welcome " + username);
+                String passText = new String(passwordTextRegister.getPassword());
+                System.out.println("Hello " + passText);
+                currentUser = Bank.getBank().registerNewCustomer(username, passText);
+            }
+            if (loginSuccess)
+                card.show(cardPane, "User Portal");
         }
     }
 
@@ -568,12 +595,11 @@ public class GUI implements ItemListener {
         }
     }
 
-
-    class userPortalListener implements ActionListener {
+    class userLoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("> Navigating to user portal.");
-            card.show(cardPane, "User Portal");
+            System.out.println("> User login.");
+            card.show(cardPane, "User Login");
         }
     }
 
@@ -593,6 +619,7 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Open checking account.");
+            Bank.getBank().openCheckingAccount(currentUser, 0, Currency.UIV);
             if (e.getSource() == openCheckingAccountButton) {
                 openCheckingAccountButton.setEnabled(false);
                 closeCheckingAccountButton.setEnabled(true);
@@ -604,6 +631,7 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Open savings account.");
+            Bank.getBank().openSavingsAccount(currentUser, 0, Currency.UIV);
             if (e.getSource() == openSavingsAccountButton) {
                 openSavingsAccountButton.setEnabled(false);
                 closeSavingsAccountButton.setEnabled(true);
@@ -659,6 +687,7 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Deposit money screen.");
+            Bank.getBank().depositMoney(currentUser)
             card.show(cardPane, "Deposit Money");
         }
     }
@@ -689,6 +718,9 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Navigating to admin portal.");
+            System.out.println("Welcome " + userTextAdmin.getText());
+            String passText = new String(passwordTextAdmin.getPassword());
+            System.out.println("Hello " + passText);
             card.show(cardPane, "Admin Portal");
         }
     }
