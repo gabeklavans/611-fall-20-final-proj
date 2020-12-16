@@ -51,11 +51,16 @@ public class Bank {
     /**
      * 
      * @return an instance of the Bank, creating one if it does not exist yet
-     * @throws BankException
+     * @implNote Will crash the program if there was a problem loading the bank
      */
-    public static Bank getBank() throws BankException {
+    public static Bank getBank() {
         if (bankManager == null) {
-            bankManager = new Bank(ACCOUNTS_FILEPATH, USERS_FILEPATH);
+            try {
+                bankManager = new Bank(ACCOUNTS_FILEPATH, USERS_FILEPATH);
+            } catch (BankException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
         }
         return bankManager;
     }
