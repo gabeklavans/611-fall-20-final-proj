@@ -72,6 +72,11 @@ public abstract class Account {
      * @return The new balance after the deposit
      */
     public double deposit(double amt, Currency type) {
+        if (amt < 0) {
+            return balance.getBalance(type);
+        }
+        Transaction trx = new Transaction(Transaction.Type.DEPOSIT, amt, type);
+        transactions.add(trx);
         return balance.deposit(amt, type);
     }
 
@@ -85,6 +90,13 @@ public abstract class Account {
      *                       withdrawal
      */
     public double withdraw(double amt, Currency type) throws BankException {
+        if (this instanceof LoanAccount) {
+            Transaction trx = new Transaction(Transaction.Type.PAYMENT, amt, type);
+            transactions.add(trx);
+        } else {
+            Transaction trx = new Transaction(Transaction.Type.WITHDRAWAL, amt, type);
+            transactions.add(trx);
+        }
         return balance.withdraw(amt, type);
     }
 
