@@ -90,6 +90,9 @@ public abstract class Account {
      *                       withdrawal
      */
     public double withdraw(double amt, Currency type) throws BankException {
+        if (amt < 0) {
+            return balance.getBalance(type);
+        }
         if (this instanceof LoanAccount) {
             Transaction trx = new Transaction(Transaction.Type.PAYMENT, amt, type);
             transactions.add(trx);
