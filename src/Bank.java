@@ -100,7 +100,11 @@ public class Bank {
      * @return a deep copy (read-only) of the list of accounts in the system
      */
     public ArrayList<Account> getAccounts() {
-        return new ArrayList<Account>(accountsManager.getData());
+        ArrayList<Account> accts = new ArrayList<>();
+        for (Account acct : accountsManager.getData()) {
+            accts.add(acct);
+        }
+        return accts;
     }
 
     /**
@@ -108,7 +112,11 @@ public class Bank {
      * @return a deep copy (read-only) of the list of users in the system
      */
     public ArrayList<User> getUsers() {
-        return new ArrayList<User>(usersManager.getData());
+        ArrayList<User> users = new ArrayList<>();
+        for (User user : usersManager.getData()) {
+            users.add(user);
+        }
+        return users;
     }
 
     /**
