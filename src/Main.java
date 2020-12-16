@@ -13,7 +13,8 @@ public class Main {
         // bank.openSavingsAccount((Customer) users.get(0), 100000.00, Currency.UIV, SavingsAccount.defaultInterestRate,
         //         Bank.MINIMUM_BALANCE_FOR_INTEREST);
         ArrayList<Account> accts = bank.getAccounts();
-        ArrayList<Transaction> thing = accts.get(0).getTransactions();
+        // ArrayList<Transaction> thing = accts.get(0).getTransactions();
+        // bank.login("gabe12", "123");
         // bank.login("hello", "hellothere");
         // bank.depositMoney(accts.get(1), 10000, Currency.BC);
         // bank.depositMoney(accts.get(2), 10000, Currency.BC);
