@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -36,8 +37,29 @@ public class GUI implements ItemListener {
     private JButton closeCheckingAccountButton;
     private JButton closeSavingsAccountButton;
     private static JButton adminPortalButton;
+
+    private JTextField checkingFieldDeposit;
+    private JTextField savingsFieldDeposit;
+    private JButton checkingButtonDeposit;
+    private JButton savingsButtonDeposit;
+
+    private JTextField checkingFieldWithdraw;
+    private JTextField savingsFieldWithdraw;
+    private JButton checkingButtonWithdraw;
+    private JButton savingsButtonWithdraw;
+
+    private JLabel checkingLabelBalances = new JLabel();
+    private JLabel checkingLabelDeposit = new JLabel();
+    private JLabel checkingLabelWithdraw = new JLabel();
+
+    private JLabel savingsLabelBalances = new JLabel();
+    private JLabel savingsLabelDeposit = new JLabel();
+    private JLabel savingsLabelWithdraw = new JLabel();
+
     User currentUser;
     Customer currentCustomer = (Customer) currentUser;
+    CheckingAccount currentChecking = null;
+    SavingsAccount currentSavings = null;
 
     JFrame frame;
     JPanel pane1, pane2, pane3, pane4, pane5, pane6, pane7, pane8, pane9, pane10, pane11, pane12, pane13, cardPane;
@@ -326,6 +348,9 @@ public class GUI implements ItemListener {
         openCheckingAccountButton.setBounds(150, 140, 200, 25);
         openCheckingListener ocl = new openCheckingListener();
         openCheckingAccountButton.addActionListener(ocl);
+        if (currentChecking != null) {
+            openCheckingAccountButton.setEnabled(false);
+        }
         panel.add(openCheckingAccountButton);
 
         openSavingsAccountButton = new JButton("Savings Account");
@@ -376,13 +401,22 @@ public class GUI implements ItemListener {
         welcomeLabel.setBounds(150, 95, 200, 25);
         panel.add(welcomeLabel);
 
-        JLabel checkingLabel = new JLabel("Checking: N/A");
-        checkingLabel.setBounds(100, 120, 200, 25);
-        panel.add(checkingLabel);
+        if (currentChecking == null) {
+            checkingLabelBalances.setText("Checking: N/A");
+        } else {
+            checkingLabelBalances.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+        }
+        checkingLabelBalances.setBounds(100, 120, 200, 25);
+        panel.add(checkingLabelBalances);
 
-        JLabel savingsLabel = new JLabel("Savings: N/A");
-        savingsLabel.setBounds(310, 120, 200, 25);
-        panel.add(savingsLabel);
+        if (currentSavings == null) {
+            savingsLabelBalances.setText("Savings: N/A");
+        } else {
+            savingsLabelBalances.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+        }
+        savingsLabelBalances = new JLabel("Savings: N/A");
+        savingsLabelBalances.setBounds(310, 120, 200, 25);
+        panel.add(savingsLabelBalances);
 
         panel.setLayout(null);
     }
@@ -398,29 +432,57 @@ public class GUI implements ItemListener {
         welcomeLabel.setBounds(150, 95, 200, 25);
         panel.add(welcomeLabel);
 
-        JLabel checkingLabel = new JLabel("Checking: N/A");
-        checkingLabel.setBounds(100, 120, 200, 25);
-        panel.add(checkingLabel);
+        if (currentChecking == null) {
+            checkingLabelDeposit.setText("Checking: N/A");
+        } else {
+            checkingLabelDeposit.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+        }
+        checkingLabelDeposit.setBounds(100, 120, 200, 25);
+        panel.add(checkingLabelDeposit);
 
-        JLabel savingsLabel = new JLabel("Savings: N/A");
-        savingsLabel.setBounds(310, 120, 200, 25);
-        panel.add(savingsLabel);
+        if (currentSavings == null) {
+            savingsLabelDeposit.setText("Savings: N/A");
+        } else {
+            savingsLabelDeposit.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+        }
+        savingsLabelDeposit.setBounds(310, 120, 200, 25);
+        panel.add(savingsLabelDeposit);
 
-        JTextField checkingField = new JTextField(5);
-        checkingField.setBounds(80, 145, 75, 25);
-        panel.add(checkingField);
+        checkingFieldDeposit = new JTextField(5);
+        checkingFieldDeposit.setBounds(80, 145, 75, 25);
+        if (currentChecking == null) {
+            checkingFieldDeposit.setEnabled(false);
+        } else {
+            checkingFieldDeposit.setEnabled(true);
+        }
+        panel.add(checkingFieldDeposit);
 
-        JButton checkingButton = new JButton("Submit");
-        checkingButton.setBounds(150, 145, 80, 25);
-        panel.add(checkingButton);
+        checkingButtonDeposit = new JButton("Submit");
+        checkingButtonDeposit.setBounds(150, 145, 80, 25);
+        if (currentChecking == null) {
+            checkingButtonDeposit.setEnabled(false);
+        } else {
+            checkingButtonDeposit.setEnabled(true);
+        }
+        panel.add(checkingButtonDeposit);
 
-        JTextField savingsField = new JTextField(5);
-        savingsField.setBounds(280, 145, 75, 25);
-        panel.add(savingsField);
+        savingsFieldDeposit = new JTextField(5);
+        savingsFieldDeposit.setBounds(280, 145, 75, 25);
+        if (currentSavings == null) {
+            savingsFieldDeposit.setEnabled(false);
+        } else {
+            savingsFieldDeposit.setEnabled(true);
+        }
+        panel.add(savingsFieldDeposit);
 
-        JButton savingsButton = new JButton("Submit");
-        savingsButton.setBounds(350, 145, 80, 25);
-        panel.add(savingsButton);
+        savingsButtonDeposit = new JButton("Submit");
+        savingsButtonDeposit.setBounds(350, 145, 80, 25);
+        if (currentSavings == null) {
+            savingsButtonDeposit.setEnabled(false);
+        } else {
+            savingsButtonDeposit.setEnabled(true);
+        }
+        panel.add(savingsButtonDeposit);
 
         panel.setLayout(null);
     }
@@ -436,29 +498,57 @@ public class GUI implements ItemListener {
         welcomeLabel.setBounds(150, 95, 200, 25);
         panel.add(welcomeLabel);
 
-        JLabel checkingLabel = new JLabel("Checking: N/A");
-        checkingLabel.setBounds(100, 120, 200, 25);
-        panel.add(checkingLabel);
+        if (currentChecking == null) {
+            checkingLabelWithdraw.setText("Checking: N/A");
+        } else {
+            checkingLabelWithdraw.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+        }
+        checkingLabelWithdraw.setBounds(100, 120, 200, 25);
+        panel.add(checkingLabelWithdraw);
 
-        JLabel savingsLabel = new JLabel("Savings: N/A");
-        savingsLabel.setBounds(310, 120, 200, 25);
-        panel.add(savingsLabel);
+        if (currentSavings == null) {
+            savingsLabelWithdraw.setText("Savings: N/A");
+        } else {
+            savingsLabelWithdraw.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+        }
+        savingsLabelWithdraw.setBounds(310, 120, 200, 25);
+        panel.add(savingsLabelWithdraw);
 
-        JTextField checkingField = new JTextField(5);
-        checkingField.setBounds(80, 145, 75, 25);
-        panel.add(checkingField);
+        checkingFieldWithdraw = new JTextField(5);
+        checkingFieldWithdraw.setBounds(80, 145, 75, 25);
+        if (currentChecking == null) {
+            checkingFieldWithdraw.setEnabled(false);
+        } else {
+            checkingFieldWithdraw.setEnabled(true);
+        }
+        panel.add(checkingFieldWithdraw);
 
-        JButton checkingButton = new JButton("Submit");
-        checkingButton.setBounds(150, 145, 80, 25);
-        panel.add(checkingButton);
+        checkingButtonWithdraw = new JButton("Submit");
+        checkingButtonWithdraw.setBounds(150, 145, 80, 25);
+        if (currentChecking == null) {
+            checkingButtonWithdraw.setEnabled(false);
+        } else {
+            checkingButtonWithdraw.setEnabled(true);
+        }
+        panel.add(checkingButtonWithdraw);
 
-        JTextField savingsField = new JTextField(5);
-        savingsField.setBounds(280, 145, 75, 25);
-        panel.add(savingsField);
+        savingsFieldWithdraw = new JTextField(5);
+        savingsFieldWithdraw.setBounds(280, 145, 75, 25);
+        if (currentSavings == null) {
+            savingsFieldWithdraw.setEnabled(false);
+        } else {
+            savingsFieldWithdraw.setEnabled(true);
+        }
+        panel.add(savingsFieldWithdraw);
 
-        JButton savingsButton = new JButton("Submit");
-        savingsButton.setBounds(350, 145, 80, 25);
-        panel.add(savingsButton);
+        savingsButtonWithdraw = new JButton("Submit");
+        savingsButtonWithdraw.setBounds(350, 145, 80, 25);
+        if (currentSavings == null) {
+            savingsButtonWithdraw.setEnabled(false);
+        } else {
+            savingsButtonWithdraw.setEnabled(true);
+        }
+        panel.add(savingsButtonWithdraw);
 
         panel.setLayout(null);
     }
@@ -565,17 +655,20 @@ public class GUI implements ItemListener {
                 System.out.println("Welcome " + username);
                 String passText = new String(passwordTextLogin.getPassword());
                 System.out.println("Hello " + passText);
-                loginSuccess = Bank.getBank().login(username, passText);
-                System.out.println(loginSuccess);
+                if (Bank.getBank().login(username, passText) != null) {
+                    currentCustomer = Bank.getBank().login(username, passText);
+                    card.show(cardPane, "User Portal");
+                }
             } else if (e.getSource() == loginButtonRegister) {
-                String username = userTextLogin.getText();
+                String username = userTextRegister.getText();
                 System.out.println("Welcome " + username);
                 String passText = new String(passwordTextRegister.getPassword());
                 System.out.println("Hello " + passText);
-                currentUser = Bank.getBank().registerNewCustomer(username, passText);
-            }
-            if (loginSuccess)
+                currentCustomer = (Customer) Bank.getBank().registerNewCustomer(username, passText);
                 card.show(cardPane, "User Portal");
+            } else {
+                card.show(cardPane, "User Portal");
+            }
         }
     }
 
@@ -619,10 +712,24 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Open checking account.");
-            Bank.getBank().openCheckingAccount(currentUser, 0, Currency.UIV);
+            Bank.getBank().openCheckingAccount(currentCustomer, 0, Currency.UIV);
+            ArrayList<Account> accounts = currentCustomer.getAccounts();
+            for (Account account:accounts) {
+                if (account instanceof CheckingAccount) {
+                    currentChecking = (CheckingAccount) account;
+                }
+            }
+            System.out.println("opened account " + currentChecking.getAccountInfo());
             if (e.getSource() == openCheckingAccountButton) {
                 openCheckingAccountButton.setEnabled(false);
                 closeCheckingAccountButton.setEnabled(true);
+                checkingFieldDeposit.setEnabled(true);
+                checkingButtonDeposit.setEnabled(true);
+                checkingFieldWithdraw.setEnabled(true);
+                checkingButtonWithdraw.setEnabled(true);
+                checkingLabelBalances.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+                checkingLabelDeposit.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+                checkingLabelWithdraw.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
             }
         }
     }
@@ -631,10 +738,24 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Open savings account.");
-            Bank.getBank().openSavingsAccount(currentUser, 0, Currency.UIV);
+            Bank.getBank().openSavingsAccount(currentCustomer, 0, Currency.UIV, SavingsAccount.DEFAULT_INTEREST_RATE, 1000000);
+            ArrayList<Account> accounts = currentCustomer.getAccounts();
+            for (Account account:accounts) {
+                if (account instanceof SavingsAccount) {
+                    currentSavings = (SavingsAccount) account;
+                }
+            }
+            System.out.println("opened account " + currentSavings.getAccountInfo());
             if (e.getSource() == openSavingsAccountButton) {
                 openSavingsAccountButton.setEnabled(false);
                 closeSavingsAccountButton.setEnabled(true);
+                savingsFieldDeposit.setEnabled(true);
+                savingsButtonDeposit.setEnabled(true);
+                savingsFieldWithdraw.setEnabled(true);
+                savingsButtonWithdraw.setEnabled(true);
+                savingsLabelBalances.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+                savingsLabelDeposit.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+                savingsLabelWithdraw.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
             }
         }
     }
@@ -653,9 +774,19 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Close checking account.");
+            System.out.println("closed account " + currentChecking.getAccountInfo());
+            Bank.getBank().deleteAccount(currentChecking.getAccountNumber());
+            System.out.println(currentCustomer.getAccounts().size());
             if (e.getSource() == closeCheckingAccountButton) {
                 closeCheckingAccountButton.setEnabled(false);
                 openCheckingAccountButton.setEnabled(true);
+                checkingFieldDeposit.setEnabled(false);
+                checkingButtonDeposit.setEnabled(false);
+                checkingFieldWithdraw.setEnabled(false);
+                checkingButtonWithdraw.setEnabled(false);
+                checkingLabelBalances.setText("Checking: N/A");
+                checkingLabelDeposit.setText("Checking: N/A");
+                checkingLabelWithdraw.setText("Checking: N/A");
             }
         }
     }
@@ -664,9 +795,19 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Close savings account.");
+            System.out.println("closed account " + currentSavings.getAccountInfo());
+            Bank.getBank().deleteAccount(currentSavings.getAccountNumber());
+            System.out.println(currentCustomer.getAccounts().size());
             if (e.getSource() == closeSavingsAccountButton) {
                 closeSavingsAccountButton.setEnabled(false);
                 openSavingsAccountButton.setEnabled(true);
+                savingsFieldDeposit.setEnabled(false);
+                savingsButtonDeposit.setEnabled(false);
+                savingsFieldWithdraw.setEnabled(false);
+                savingsButtonWithdraw.setEnabled(false);
+                savingsLabelBalances.setText("Savings: N/A");
+                savingsLabelDeposit.setText("Savings: N/A");
+                savingsLabelWithdraw.setText("Savings: N/A");
             }
         }
     }
@@ -687,7 +828,12 @@ public class GUI implements ItemListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Deposit money screen.");
-            Bank.getBank().depositMoney(currentUser)
+            ArrayList<Account> accounts = currentCustomer.getAccounts();
+//            for (Account account:accounts) {
+//                if (account.Type == CHECKING)
+//
+//            }
+//            Bank.getBank().depositMoney(currentUser)
             card.show(cardPane, "Deposit Money");
         }
     }
