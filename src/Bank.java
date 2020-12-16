@@ -64,12 +64,15 @@ public class Bank {
      * 
      * @param username
      * @param password
-     * @return True if the username existed and the password was correct (successful
-     *         login)
+     * @return The logged in customer, null if the user/pass was incorrect
      */
-    public boolean login(String username, String password) {
+    public Customer login(String username, String password) {
         User user = usersManager.getUser(username);
-        return user.getUserData().getLoginPassword().equals(password);
+        if (user.getUserData().getLoginPassword().equals(password)) {
+            return (Customer) user;
+        } else {
+            return null;
+        }
     }
 
     /**
