@@ -464,6 +464,8 @@ public class GUI implements ItemListener {
         } else {
             checkingButtonDeposit.setEnabled(true);
         }
+        checkingDepositListener cdl = new checkingDepositListener();
+        checkingButtonDeposit.addActionListener(cdl);
         panel.add(checkingButtonDeposit);
 
         savingsFieldDeposit = new JTextField(5);
@@ -482,6 +484,8 @@ public class GUI implements ItemListener {
         } else {
             savingsButtonDeposit.setEnabled(true);
         }
+        savingsDepositListener sdl = new savingsDepositListener();
+        savingsButtonDeposit.addActionListener(sdl);
         panel.add(savingsButtonDeposit);
 
         panel.setLayout(null);
@@ -530,6 +534,8 @@ public class GUI implements ItemListener {
         } else {
             checkingButtonWithdraw.setEnabled(true);
         }
+        checkingWithdrawListener cwl = new checkingWithdrawListener();
+        checkingButtonWithdraw.addActionListener(cwl);
         panel.add(checkingButtonWithdraw);
 
         savingsFieldWithdraw = new JTextField(5);
@@ -548,6 +554,8 @@ public class GUI implements ItemListener {
         } else {
             savingsButtonWithdraw.setEnabled(true);
         }
+        savingsWithdrawListener swl = new savingsWithdrawListener();
+        savingsButtonWithdraw.addActionListener(swl);
         panel.add(savingsButtonWithdraw);
 
         panel.setLayout(null);
@@ -838,6 +846,44 @@ public class GUI implements ItemListener {
         }
     }
 
+    class checkingDepositListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Depositing money: " + checkingFieldDeposit.getText());
+//            ArrayList<Account> accounts = currentCustomer.getAccounts();
+            double depositAmount = Double.parseDouble(checkingFieldDeposit.getText());
+//            currentChecking.deposit(depositAmount, Currency.UIV);
+            try {
+                Bank.getBank().depositMoney(currentChecking, depositAmount, Currency.UIV);
+            } catch (BankException bankException) {
+                bankException.printStackTrace();
+            }
+            checkingLabelBalances.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+            checkingLabelDeposit.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+            checkingLabelWithdraw.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+//            card.show(cardPane, "Deposit Money");
+        }
+    }
+
+    class savingsDepositListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Depositing money: " + savingsFieldDeposit.getText());
+//            ArrayList<Account> accounts = currentCustomer.getAccounts();
+            double depositAmount = Double.parseDouble(savingsFieldDeposit.getText());
+//            currentChecking.deposit(depositAmount, Currency.UIV);
+            try {
+                Bank.getBank().depositMoney(currentSavings, depositAmount, Currency.UIV);
+            } catch (BankException bankException) {
+                bankException.printStackTrace();
+            }
+            savingsLabelBalances.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+            savingsLabelDeposit.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+            savingsLabelWithdraw.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+//            card.show(cardPane, "Deposit Money");
+        }
+    }
+
     // Withdraw Money
 
     class withdrawMoneyListener implements ActionListener {
@@ -845,6 +891,38 @@ public class GUI implements ItemListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("> Withdraw money screen.");
             card.show(cardPane, "Withdraw Money");
+        }
+    }
+
+    class checkingWithdrawListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Withdrawing money: " + checkingFieldWithdraw.getText());
+            double withdrawAmount = Double.parseDouble(checkingFieldWithdraw.getText());
+            try {
+                Bank.getBank().withdrawMoney(currentChecking, withdrawAmount, Currency.UIV);
+            } catch (BankException bankException) {
+                bankException.printStackTrace();
+            }
+            checkingLabelBalances.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+            checkingLabelDeposit.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+            checkingLabelWithdraw.setText("Checking: " + currentChecking.getBalance(Currency.UIV));
+        }
+    }
+
+    class savingsWithdrawListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Withdrawing money: " + savingsFieldWithdraw.getText());
+            double withdrawAmount = Double.parseDouble(savingsFieldWithdraw.getText());
+            try {
+                Bank.getBank().withdrawMoney(currentSavings, withdrawAmount, Currency.UIV);
+            } catch (BankException bankException) {
+                bankException.printStackTrace();
+            }
+            savingsLabelBalances.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+            savingsLabelDeposit.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
+            savingsLabelWithdraw.setText("Savings: " + currentSavings.getBalance(Currency.UIV));
         }
     }
 
