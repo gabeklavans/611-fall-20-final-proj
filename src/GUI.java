@@ -437,6 +437,7 @@ public class GUI implements ItemListener {
         transactionsArea = new JTextArea();
 //        transactionsArea.setEditable(false);
         transactionsArea.setBounds(50, 180, 400, 150);
+        transactionsArea.setLineWrap(true);
         panel.add(transactionsArea);
 
 
@@ -630,6 +631,7 @@ public class GUI implements ItemListener {
         JTextArea customersArea = new JTextArea();
 //        reportArea.setEditable(false);
         customersArea.setBounds(50, 180, 400, 150);
+        customersArea.setLineWrap(true);
         panel.add(customersArea);
 
         panel.setLayout(null);
@@ -658,6 +660,7 @@ public class GUI implements ItemListener {
         JTextArea reportArea = new JTextArea();
 //        reportArea.setEditable(false);
         reportArea.setBounds(50, 180, 400, 150);
+        reportArea.setLineWrap(true);
         panel.add(reportArea);
 
         panel.setLayout(null);
@@ -871,9 +874,9 @@ public class GUI implements ItemListener {
             String res = "";
             for (Transaction transaction:currentChecking.getTransactions()) {
                 System.out.println(transaction);
-                res += transaction;
+                res += transaction + "\n";
             }
-            System.out.println("Kore wa: " + res);
+//            System.out.println("Kore wa: " + res);
             transactionsArea.setText(res);
             System.out.println("This is: " + transactionsArea.getText());
         }
@@ -885,7 +888,7 @@ public class GUI implements ItemListener {
             System.out.println("> Showing savings transactions.");
             String res = "";
             for (Transaction transaction:currentSavings.getTransactions()) {
-                res += transaction;
+                res += transaction + "\n";
             }
             transactionsArea.setText(res);
         }
@@ -1029,6 +1032,33 @@ public class GUI implements ItemListener {
             card.show(cardPane, "Reports");
         }
     }
+
+//    class reportsButtonListener implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            System.out.println("> Showing checking transactions.");
+//            String res = "";
+//            for (Transaction transaction:currentChecking.getTransactions()) {
+//                System.out.println(transaction);
+//                res += transaction + "\n";
+//            }
+////            System.out.println("Kore wa: " + res);
+//            transactionsArea.setText(res);
+//            System.out.println("This is: " + transactionsArea.getText());
+//        }
+//    }
+//
+//    class savingsTransactionsListener implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            System.out.println("> Showing savings transactions.");
+//            String res = "";
+//            for (Transaction transaction:currentSavings.getTransactions()) {
+//                res += transaction + "\n";
+//            }
+//            transactionsArea.setText(res);
+//        }
+//    }
 
     /* Override Methods */
 
