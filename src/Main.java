@@ -14,6 +14,7 @@ public class Main {
         //         Bank.MINIMUM_BALANCE_FOR_INTEREST);
         ArrayList<Account> accts = bank.getAccounts();
         ArrayList<Transaction> thing = accts.get(0).getTransactions();
+        // bank.login("hello", "hellothere");
         // bank.depositMoney(accts.get(1), 10000, Currency.BC);
         // bank.depositMoney(accts.get(2), 10000, Currency.BC);
         // bank.payLoan(accts.get(6), 1.00, Currency.UIV);

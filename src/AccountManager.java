@@ -38,15 +38,27 @@ public class AccountManager extends DataManager<Account> {
             CharSequence accountType = element[1].subSequence(0, 1);
             ArrayList<Transaction> transactions = new ArrayList<>();
             if (((String) accountType).equals("S")) {
-                transactions = convertStringToTransaction(element[5]);
+                if (element.length < 6) {
+                    transactions = new ArrayList<>();
+                } else {
+                    transactions = convertStringToTransaction(element[5]);
+                }
                 getData().add(SavingsAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
                         Double.parseDouble(element[3]), Double.parseDouble(element[4]), transactions));
             } else if (((String) accountType).equals("C")) {
-                transactions = convertStringToTransaction(element[3]);
+                if (element.length < 4) {
+                    transactions = new ArrayList<>();
+                } else {
+                    transactions = convertStringToTransaction(element[3]);
+                }
                 getData().add(CheckingAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
                         transactions));
             } else {
-                transactions = convertStringToTransaction(element[5]);
+                if (element.length < 6) {
+                    transactions = new ArrayList<>();
+                } else {
+                    transactions = convertStringToTransaction(element[5]);
+                }
                 getData().add(LoanAccount.loadAccount(element[0], element[1], Double.parseDouble(element[2]),
                         Double.parseDouble(element[3]), element[4], transactions));
             }
