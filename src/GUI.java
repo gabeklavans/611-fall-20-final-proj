@@ -38,6 +38,8 @@ public class GUI implements ItemListener {
     private JButton closeSavingsAccountButton;
     private static JButton adminPortalButton;
     private JTextArea transactionsArea;
+    private JTextArea customersArea;
+    private JTextArea reportArea;
 
     private JTextField checkingFieldDeposit;
     private JTextField savingsFieldDeposit;
@@ -435,7 +437,7 @@ public class GUI implements ItemListener {
         panel.add(savingsTransactionsButton);
 
         transactionsArea = new JTextArea();
-//        transactionsArea.setEditable(false);
+        transactionsArea.setEditable(false);
         transactionsArea.setBounds(50, 180, 400, 150);
         transactionsArea.setLineWrap(true);
         panel.add(transactionsArea);
@@ -628,8 +630,8 @@ public class GUI implements ItemListener {
         overdueCustomers.setEnabled(false);
         panel.add(overdueCustomers);
 
-        JTextArea customersArea = new JTextArea();
-//        reportArea.setEditable(false);
+        customersArea = new JTextArea();
+        customersArea.setEditable(false);
         customersArea.setBounds(50, 180, 400, 150);
         customersArea.setLineWrap(true);
         panel.add(customersArea);
@@ -650,6 +652,8 @@ public class GUI implements ItemListener {
 
         JButton completeReport = new JButton("Complete Report");
         completeReport.setBounds(75, 145, 150, 25);
+        reportsButtonListener rbl = new reportsButtonListener();
+        completeReport.addActionListener(rbl);
         panel.add(completeReport);
 
         JButton changesReport = new JButton("Changes Since Last Report");
@@ -657,8 +661,8 @@ public class GUI implements ItemListener {
         changesReport.setEnabled(false);
         panel.add(changesReport);
 
-        JTextArea reportArea = new JTextArea();
-//        reportArea.setEditable(false);
+        reportArea = new JTextArea();
+        reportArea.setEditable(false);
         reportArea.setBounds(50, 180, 400, 150);
         reportArea.setLineWrap(true);
         panel.add(reportArea);
@@ -1033,32 +1037,23 @@ public class GUI implements ItemListener {
         }
     }
 
-//    class reportsButtonListener implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            System.out.println("> Showing checking transactions.");
-//            String res = "";
-//            for (Transaction transaction:currentChecking.getTransactions()) {
-//                System.out.println(transaction);
-//                res += transaction + "\n";
-//            }
-////            System.out.println("Kore wa: " + res);
-//            transactionsArea.setText(res);
-//            System.out.println("This is: " + transactionsArea.getText());
-//        }
-//    }
-//
-//    class savingsTransactionsListener implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            System.out.println("> Showing savings transactions.");
-//            String res = "";
-//            for (Transaction transaction:currentSavings.getTransactions()) {
-//                res += transaction + "\n";
-//            }
-//            transactionsArea.setText(res);
-//        }
-//    }
+    class reportsButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("> Showing all transactions.");
+            String res = "";
+            for (Transaction transaction:currentChecking.getTransactions()) {
+                System.out.println(transaction);
+                res += transaction + "\n";
+            }
+            for (Transaction transaction:currentSavings.getTransactions()) {
+                System.out.println(transaction);
+                res += transaction + "\n";
+            }
+            reportArea.setText(res);
+            System.out.println("This is: " + transactionsArea.getText());
+        }
+    }
 
     /* Override Methods */
 
