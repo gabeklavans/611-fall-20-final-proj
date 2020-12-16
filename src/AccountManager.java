@@ -181,4 +181,22 @@ public class AccountManager extends DataManager<Account> {
         throw new BankException("The account with ID {" + accountId + "} could not be found in the system");
     }
 
+    /**
+     * 
+     * @param accountId
+     * @return the removed account, null if not found
+     */
+    public Account removeAccount(String accountId) {
+        ArrayList<Account> accts = getData();
+        for (int i = 0; i < accts.size(); i++) {
+            if (accts.get(i).getAccountNumber().equals(accountId)) {
+                Account removedAcct = accts.remove(i);
+                writeData();
+                return removedAcct;
+            }
+        }
+
+        return null;
+    }
+
 }

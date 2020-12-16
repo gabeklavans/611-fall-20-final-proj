@@ -224,6 +224,17 @@ public class Bank {
     }
 
     /**
+     * Remove the account with the specified ID from the system and all the users
+     * that registered this account.
+     * 
+     * @param accountId
+     */
+    public void deleteAccount(String accountId) {
+        Account removedAcct = accountsManager.removeAccount(accountId);
+        usersManager.removeAccount(removedAcct);
+    }
+
+    /**
      * Generate the interest for all accounts in the system based on their
      * individual interest rates
      */

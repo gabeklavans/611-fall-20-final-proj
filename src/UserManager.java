@@ -69,6 +69,7 @@ public class UserManager extends DataManager<User> {
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv));
             ArrayList<User> data = getData();
             for (User s : data) {
+                ((Customer) s).setAccountsList();
                 UserData userdata = ((Customer) s).getUserData();
                 bw.write(userdata.getStringInfo());
                 bw.newLine();
@@ -119,6 +120,20 @@ public class UserManager extends DataManager<User> {
         }
 
         return null;
+    }
+
+    /**
+     * Find and remove all instances of this account from every user in the system.
+     * 
+     * @param removedAcct
+     */
+    public void removeAccount(Account removedAcct) {
+        for (User user : getData()) {
+            Customer customer = (Customer) user;
+            customer.getAccounts().remove(removedAcct);
+        }
+
+        writeData();
     }
 
 }

@@ -13,6 +13,7 @@ public class Main {
         // bank.openSavingsAccount((Customer) users.get(0), 100000.00, Currency.UIV, SavingsAccount.defaultInterestRate,
         //         Bank.MINIMUM_BALANCE_FOR_INTEREST);
         ArrayList<Account> accts = bank.getAccounts();
+        // bank.deleteAccount("Sf1cd232e-5526-43db-9236-1e17041ab315");
         // bank.openLoan((Customer) users.get(2), 100000.00, LoanAccount.DEFAULT_INTEREST_RATE, Currency.UIV, "my dog");
         // bank.depositMoney(accts.get(0), 100000000000.00, Currency.UIV);
         // bank.withdrawMoney(accts.get(0), 500000, Currency.UIV);
